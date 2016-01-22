@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="hummingbird.android.mobile_app.views.LibraryActivity"
+    android:id="@+id/LinearLayout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:id="@+id/search_filter_layout">
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:inputType="textEmailAddress"
+            android:id="@+id/library_text_filter"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/imageButton"
+            android:layout_toStartOf="@+id/imageButton" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:id="@+id/imageButton"
+            android:src="@drawable/ic_action_search"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Spinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/library_text_filter" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/library_tabs"
+        app:tabMode="scrollable"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/library_view_pager" />
+
+</LinearLayout>

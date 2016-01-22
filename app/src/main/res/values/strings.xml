@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Hummingbird on Wheels</string>
+    <string name="edit_message">Kumiko</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_send">Send</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="action_search">Search</string>
+    <string name="login_send">Login</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_anime">Anime</string>
+    <string name="title_activity_test_fragment">TestFragment</string>
+    <string name="anime_watched">Watched</string>
+
+    <string-array name="watch_status_values">
+        <item>WATCHING</item>
+        <item>COMPLETETD</item>
+        <item>PLANNING</item>
+        <item>DROPPED</item>
+    </string-array>
+    <string name="title_activity_library">Library</string>
+
+    </resources>

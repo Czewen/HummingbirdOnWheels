@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/login_menu">
+
+    <EditText
+        android:id="@+id/edit_message"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_message"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/button"
+        android:layout_toStartOf="@+id/button" />
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_send"
+        android:onClick="sendMessage"
+        android:id="@+id/button"
+        android:layout_above="@+id/login_username_textbox"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <EditText
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter username"
+        android:inputType="textEmailAddress"
+        android:id="@+id/login_username_textbox"
+        android:layout_below="@+id/edit_message"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="140dp"
+        android:scrollHorizontally="true"
+        android:layout_alignRight="@+id/login_password_textbox"
+        android:layout_alignEnd="@+id/login_password_textbox" />
+
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login_send"
+        android:id="@+id/login_button"
+        android:onClick="login"
+        android:layout_below="@+id/login_password_textbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="89dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:scrollHorizontally="true"
+        android:id="@+id/auth_token"
+        android:layout_below="@+id/login_button"
+        android:layout_alignRight="@+id/button"
+        android:layout_alignEnd="@+id/button"
+        android:background="@color/accent_material_light" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/login_password_textbox"
+        android:layout_below="@+id/login_username_textbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter password" />
+
+
+</RelativeLayout>

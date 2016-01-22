@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:gravity="center"
+        android:editable="false"
+        android:id="@+id/anime_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="219dp">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="170dp"
+            android:id="@+id/anime_cover_photo"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:id="@+id/watch_status"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/anime_cover_photo"
+            android:layout_marginLeft="10dp"
+            android:spinnerMode="dropdown"
+            android:background="#ff9c21"
+            android:gravity="center"
+            android:entries="@array/watch_status_values"
+            android:layout_alignRight="@+id/increase_watched_episodes"
+            android:layout_alignEnd="@+id/increase_watched_episodes" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Watched"
+            android:id="@+id/textView"
+            android:layout_below="@+id/watch_status"
+            android:layout_toRightOf="@+id/anime_cover_photo"
+            android:layout_toEndOf="@+id/anime_cover_photo"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/episodes_watched"
+            android:inputType="number"
+            android:layout_below="@+id/watch_status"
+            android:layout_toRightOf="@+id/textView"
+            android:layout_marginLeft="10dp"
+            android:editable="true"
+            android:layout_marginTop="10dp"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/no_episodes"
+            android:layout_alignTop="@+id/episodes_watched"
+            android:layout_toRightOf="@+id/episodes_watched"
+            android:layout_toEndOf="@+id/episodes_watched"
+            android:text="/38" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:id="@+id/increase_watched_episodes"
+            android:background="#ff9c21"
+            android:textColor="#ffffff"
+            android:onClick="increaseWatchedEpisodes"
+            android:layout_alignTop="@+id/no_episodes"
+            android:layout_toRightOf="@+id/no_episodes"
+            android:layout_toEndOf="@+id/no_episodes" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_below="@+id/increase_watched_episodes"
+            android:layout_alignRight="@+id/increase_watched_episodes"
+            android:layout_alignEnd="@+id/increase_watched_episodes"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_alignStart="@+id/textView"
+            android:layout_marginTop="10dp"
+            android:background="#ff9c21" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/anime_tabs"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/anime_view_pager" />
+</LinearLayout>
