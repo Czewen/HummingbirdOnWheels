@@ -8,3 +8,7 @@ gradle/**
 gradlew
 build/**
 build.gradle
+app/*.iml
+app/libs/*
+*.gradle
+*.iml
