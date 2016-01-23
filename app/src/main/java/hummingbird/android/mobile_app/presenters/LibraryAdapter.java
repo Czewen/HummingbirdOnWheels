@@ -6,17 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.logging.Filter;
+
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.models.LibraryEntry;
 
 /**
  * Created by CzeWen on 2016-01-09.
  */
-public class LibraryAdapter extends ArrayAdapter<LibraryEntry> {
+public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filterable {
     Context context;
     int layoutResourceId;
     ArrayList<LibraryEntry> data =  null;
@@ -43,7 +46,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> {
             row.setTag(view_holder);
         }
         else{
-         view_holder = (ViewHolder) convertView.getTag();
+            view_holder = (ViewHolder) convertView.getTag();
         }
         LibraryEntry entry = data.get(position);
         String image_uri = entry.anime.cover_image;

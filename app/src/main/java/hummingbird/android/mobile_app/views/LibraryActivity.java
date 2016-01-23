@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.presenters.LibraryPresenter;
@@ -27,6 +28,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     ViewPager view_pager;
     TabLayout library_tabs;
     public boolean first_page_loaded;
+    EditText search_filter;
 
 
     @Override
@@ -45,6 +47,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             retained_presenter = new RetainedPresenter<LibraryPresenter>();
             retained_presenter.setData(library_presenter);
             fm.beginTransaction().add(retained_presenter, "data").commit();
+            int b = 1;
         }
         else{
             library_presenter = retained_presenter.getData();
@@ -100,6 +103,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     }
 
     public void fetchLibraryInformation(){
+        int b = 1;
         if(username.contentEquals("me")){
             library_presenter.fetchLibraryInformation(username, auth_token);
         }
@@ -115,6 +119,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     public void firstFragmentLoaded(){
         if(first_page_loaded==false){
             fragment_adapter.onFragmentSelected(0);
+            first_page_loaded = true;
         }
     }
 

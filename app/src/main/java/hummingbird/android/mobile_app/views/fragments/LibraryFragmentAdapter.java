@@ -17,8 +17,8 @@ import test.PageFragment;
  */
 public class LibraryFragmentAdapter extends FragmentPagerAdapter {
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-    private String[] tabTitles = { "Completed", "Watching", "Dropped", "Plan to Watch" };
-    final int PAGE_COUNT = 2;
+    private String[] tabTitles = { "Completed", "Watching", "Dropped", "Plan to Watch", "On hold" };
+    final int PAGE_COUNT = tabTitles.length;
     private Context context;
 
 
@@ -84,14 +84,9 @@ public class LibraryFragmentAdapter extends FragmentPagerAdapter {
         }
         LibraryListFragment library_fragment = (LibraryListFragment) fragment;
         if(!library_fragment.hasEntries()){
-            //Bundle args = new Bundle();
-            //args.putParcelableArrayList("ARG_ENTRIES", library_fragment.library_entries);
-            //library_fragment.populateList(args);
+            int a = 1;
             library_fragment.mCallBack.fetchLibraryInformation();
         }
-        //else {
-        //
-        //}
     }
 
 

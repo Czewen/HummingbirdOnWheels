@@ -60,19 +60,20 @@ public class LibraryPresenter extends Presenter {
         LibraryListFragment library_list_view = view.getCurrentFragment();
         String list_type = library_list_view.getListType();
         Bundle args = new Bundle();
-        if(list_type.contentEquals("All")){
-            args.putParcelableArrayList("ARG_ENTRIES", library_entries);
-        }
-        else{
-            ArrayList<LibraryEntry> matching_entries = new ArrayList<>();
-            for(LibraryEntry entry : library_entries){
-                if(mapJsonResultToListType(entry.status).contentEquals(list_type)){
-                    matching_entries.add(entry);
+        if(library_entries.size()>0) {
+            if (list_type.contentEquals("All")) {
+                args.putParcelableArrayList("ARG_ENTRIES", library_entries);
+            } else {
+                ArrayList<LibraryEntry> matching_entries = new ArrayList<>();
+                for (LibraryEntry entry : library_entries) {
+                    if (mapJsonResultToListType(entry.status).contentEquals(list_type)) {
+                        matching_entries.add(entry);
+                    }
                 }
+                args.putParcelableArrayList("ARG_ENTRIES", matching_entries);
             }
-            args.putParcelableArrayList("ARG_ENTRIES", matching_entries);
+            library_list_view.populateList(args);
         }
-        library_list_view.populateList(args);
     }
 
     public String mapJsonResultToListType(String json_result){

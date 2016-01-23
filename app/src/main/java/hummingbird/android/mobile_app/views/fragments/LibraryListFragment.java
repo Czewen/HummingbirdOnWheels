@@ -25,7 +25,7 @@ import hummingbird.android.mobile_app.views.activities.AnimeActivity;
 public class LibraryListFragment extends Fragment {
 
     public static final String ARG_ENTRIES = "ARG_ENTRIES";
-    public ArrayList<LibraryEntry> library_entries;
+    public ArrayList<LibraryEntry> library_entries = new ArrayList<>();
     private LibraryAdapter libraryAdapter;
     private ListView list_view;
     private String list_type;
@@ -76,7 +76,6 @@ public class LibraryListFragment extends Fragment {
     public View onCreateView(LayoutInflater layout_inflater, ViewGroup parent, Bundle saved_instance_state){
         View view = layout_inflater.inflate(R.layout.list_view_for_fragment, parent, false);
         list_view = (ListView) view.findViewById(R.id.listviewfragment);
-        library_entries = new ArrayList<LibraryEntry>();
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

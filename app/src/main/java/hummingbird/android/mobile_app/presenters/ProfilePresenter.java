@@ -59,7 +59,7 @@ public class ProfilePresenter extends Presenter{
     }
 
     public void getOwnLibrary(String auth_token){
-        profile_view.setResponseError("Calling API for libraries");
+        //profile_view.setResponseError("Calling API for libraries");
         EventBus.getDefault().post(new GetLibraryEvent("me", auth_token));
     }
 
@@ -115,6 +115,9 @@ public class ProfilePresenter extends Presenter{
         profile_view.setResponseError("NETWORK FAILURE");
     }
 
+    public boolean isListening(){
+        return EventBus.getDefault().isRegistered(this);
+    }
 
     public void bindView(ProfileView view){
         this.profile_view =  view;
@@ -123,11 +126,5 @@ public class ProfilePresenter extends Presenter{
     public void unbindView(){
         this.profile_view = null;
     }
-
-
-
-
-
-
 
 }

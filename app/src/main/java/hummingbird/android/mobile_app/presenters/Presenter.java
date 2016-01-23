@@ -28,6 +28,8 @@ public class Presenter {
         EventBus.getDefault().unregister(this);
     }
 
+    public void onStop(){ EventBus.getDefault().unregister(this);}
+
     public void onResume(){
         EventBus.getDefault().register(this);
     }

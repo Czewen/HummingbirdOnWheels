@@ -180,13 +180,30 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
-
         savedInstanceState.putString("auth_token", auth_token);
         savedInstanceState.putString("user", username);
         profile_presenter.unbindView();
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        profile_presenter.onPause();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        profile_presenter.onStop();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(!profile_presenter.isListening())
+            profile_presenter.onResume();
+    }
 
     public Context getContext(){
         return getContext();
