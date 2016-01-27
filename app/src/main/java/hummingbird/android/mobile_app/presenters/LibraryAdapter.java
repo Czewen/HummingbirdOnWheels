@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
-import java.util.logging.Filter;
+import android.widget.Filter;
 
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.models.LibraryEntry;
@@ -57,6 +57,49 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
                 .into(view_holder.getLibraryEntryImage());
         view_holder.getTitle().setText(entry.anime.title);
         return row;
+    }
+
+    @Override
+    public Filter getFilter(){
+        return null; //stub wip
+    }
+
+    private class LibraryFilter<E> extends Filter{
+
+        String addtional_constraint_type;
+        Comparable<E> value;
+
+        public LibraryFilter(String additional_constraint_type, Comparable<E> value){
+            this.addtional_constraint_type = additional_constraint_type;
+            this.value = value;
+        }
+
+        @Override
+        public FilterResults performFiltering(CharSequence constraint){
+            FilterResults filter_results = new FilterResults();
+            if(constraint == null || constraint.length()==0){
+                filter_results.values = data;
+                filter_results.count = data.size();
+            }
+            else{
+                ArrayList<LibraryEntry> filtered_entries = new ArrayList<>();
+                for(LibraryEntry entry : data){
+                    if(entry.anime.title.contains(constraint))
+                        filtered_entries.add(entry);
+                }
+                filter_results.values = data;
+                filter_results.count = data.size();
+            }
+            return filter_results;
+        }
+
+        @Override
+        public void publishResults(CharSequence constraint, FilterResults results){
+            ArrayList<LibraryEntry> temp = data;
+            data = (ArrayList<LibraryEntry>) results.values;
+            notifyDataSetChanged();
+        }
+
     }
 
     class ViewHolder{
