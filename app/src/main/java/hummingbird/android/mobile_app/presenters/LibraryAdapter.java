@@ -23,11 +23,18 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
     Context context;
     int layoutResourceId;
     ArrayList<LibraryEntry> data =  null;
+    ArrayList<LibraryEntry> original = null;
+    LibraryFilter<String> search_filter;
+
     public LibraryAdapter(Context context, int layoutResourceId, ArrayList<LibraryEntry> data){
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+        original = new ArrayList<LibraryEntry>();
+        for(LibraryEntry entry : data){
+            original.add(entry);
+        }
     }
 
     @Override
@@ -48,7 +55,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         else{
             view_holder = (ViewHolder) convertView.getTag();
         }
-        LibraryEntry entry = data.get(position);
+        LibraryEntry entry = original.get(position);
         String image_uri = entry.anime.cover_image;
         Picasso.with(row.getContext())
                 .load(image_uri)
@@ -61,34 +68,30 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
 
     @Override
     public Filter getFilter(){
-        return null; //stub wip
+        if(search_filter==null){
+            search_filter = new LibraryFilter<String>();
+        }
+        return search_filter; //stub wip
     }
 
     private class LibraryFilter<E> extends Filter{
 
-        String addtional_constraint_type;
-        Comparable<E> value;
-
-        public LibraryFilter(String additional_constraint_type, Comparable<E> value){
-            this.addtional_constraint_type = additional_constraint_type;
-            this.value = value;
-        }
 
         @Override
         public FilterResults performFiltering(CharSequence constraint){
             FilterResults filter_results = new FilterResults();
-            if(constraint == null || constraint.length()==0){
-                filter_results.values = data;
-                filter_results.count = data.size();
-            }
-            else{
+            //if(constraint == null || constraint.length()==0){
+             //   filter_results.values = data;
+             //   filter_results.count = data.size();
+            //}
+            if(constraint!=null && constraint.length()>0){
                 ArrayList<LibraryEntry> filtered_entries = new ArrayList<>();
-                for(LibraryEntry entry : data){
-                    if(entry.anime.title.contains(constraint))
+                for(LibraryEntry entry : original){
+                    if(entry.anime.title.toLowerCase().contains(constraint))
                         filtered_entries.add(entry);
                 }
-                filter_results.values = data;
-                filter_results.count = data.size();
+                filter_results.values = filtered_entries;
+                filter_results.count = filtered_entries.size();
             }
             return filter_results;
         }
@@ -96,10 +99,25 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         @Override
         public void publishResults(CharSequence constraint, FilterResults results){
             ArrayList<LibraryEntry> temp = data;
-            data = (ArrayList<LibraryEntry>) results.values;
+            ArrayList<LibraryEntry> matching_entries = (ArrayList<LibraryEntry>) results.values;
+            //data.clear();
+            //for(LibraryEntry entry : matching_entries){
+            //    data.add(entry);
+            //}
+            data = matching_entries;
             notifyDataSetChanged();
         }
 
+    }
+
+    public void resetDefault(){
+        this.clear();
+        for(LibraryEntry entry : original){
+            this.add(entry);
+        }
+        //data = original;
+        notifyDataSetChanged();
+        System.out.println("Argh");
     }
 
     class ViewHolder{

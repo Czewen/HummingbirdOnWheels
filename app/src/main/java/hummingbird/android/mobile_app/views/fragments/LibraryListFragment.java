@@ -26,7 +26,7 @@ public class LibraryListFragment extends Fragment {
 
     public static final String ARG_ENTRIES = "ARG_ENTRIES";
     public ArrayList<LibraryEntry> library_entries = new ArrayList<>();
-    private LibraryAdapter libraryAdapter;
+    public LibraryAdapter libraryAdapter;
     private ListView list_view;
     private String list_type;
     int position;
@@ -115,6 +115,7 @@ public class LibraryListFragment extends Fragment {
         boolean result = (library_entries.size()==0) ? false : true;
         return result;
     }
+
 
 
 }

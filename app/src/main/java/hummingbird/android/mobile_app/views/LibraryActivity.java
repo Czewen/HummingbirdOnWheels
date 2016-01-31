@@ -6,9 +6,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.presenters.LibraryPresenter;
@@ -28,7 +32,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     ViewPager view_pager;
     TabLayout library_tabs;
     public boolean first_page_loaded;
-    EditText search_filter;
+    TextView search_filter;
 
 
     @Override
@@ -47,12 +51,30 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             retained_presenter = new RetainedPresenter<LibraryPresenter>();
             retained_presenter.setData(library_presenter);
             fm.beginTransaction().add(retained_presenter, "data").commit();
-            int b = 1;
         }
         else{
             library_presenter = retained_presenter.getData();
         }
         setupTabs();
+        search_filter = (EditText) findViewById(R.id.library_text_filter);
+        search_filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()==0){
+                    getCurrentFragment().libraryAdapter.resetDefault();
+                }
+            }
+        });
     }
 
     @Override
@@ -121,6 +143,15 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             fragment_adapter.onFragmentSelected(0);
             first_page_loaded = true;
         }
+    }
+
+    public void filter_listings(View view){
+        if(search_filter==null){
+            search_filter = (TextView) findViewById(R.id.library_text_filter);
+        }
+        CharSequence pattern = search_filter.getText().toString();
+        LibraryListFragment current_fragment = (LibraryListFragment) fragment_adapter.getRegisteredFragment(view_pager.getCurrentItem());
+        current_fragment.libraryAdapter.getFilter().filter(pattern);
     }
 
 }
