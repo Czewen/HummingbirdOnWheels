@@ -26,6 +26,7 @@ public class LibraryPresenter extends Presenter {
         this.view = view;
         library_service = new LibraryService();
         EventBus.getDefault().register(this);
+        super.bindService(library_service);
     }
 
     //Make an api call only if we dont have any saved information
@@ -34,7 +35,9 @@ public class LibraryPresenter extends Presenter {
             populateLibrary();
         }
         else{
-            EventBus.getDefault().post(new GetLibraryEvent(username));
+            GetLibraryEvent event = new GetLibraryEvent(username);
+            event.setDebug("from_library_fetch_library_information_user");
+            EventBus.getDefault().post(event);
         }
     }
 
@@ -43,11 +46,11 @@ public class LibraryPresenter extends Presenter {
     }
 
     public void getLatestChanges(String username, String auth_token){
-        EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
+        //EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
     }
 
     public void getLatestChanges(String username){
-        EventBus.getDefault().post(new GetLibraryEvent(username));
+        //EventBus.getDefault().post(new GetLibraryEvent(username));
     }
 
     public void onEvent(GetLibrarySuccessEvent event){

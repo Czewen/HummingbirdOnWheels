@@ -23,7 +23,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
     Context context;
     int layoutResourceId;
     ArrayList<LibraryEntry> data =  null;
-    ArrayList<LibraryEntry> original = null;
+    public ArrayList<LibraryEntry> original = null;
     LibraryFilter<String> search_filter;
 
     public LibraryAdapter(Context context, int layoutResourceId, ArrayList<LibraryEntry> data){
@@ -32,9 +32,6 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         this.context = context;
         this.data = data;
         original = new ArrayList<LibraryEntry>();
-        for(LibraryEntry entry : data){
-            original.add(entry);
-        }
     }
 
     @Override
@@ -55,7 +52,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         else{
             view_holder = (ViewHolder) convertView.getTag();
         }
-        LibraryEntry entry = original.get(position);
+        LibraryEntry entry = data.get(position);
         String image_uri = entry.anime.cover_image;
         Picasso.with(row.getContext())
                 .load(image_uri)
@@ -100,11 +97,12 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         public void publishResults(CharSequence constraint, FilterResults results){
             ArrayList<LibraryEntry> temp = data;
             ArrayList<LibraryEntry> matching_entries = (ArrayList<LibraryEntry>) results.values;
-            //data.clear();
-            //for(LibraryEntry entry : matching_entries){
-            //    data.add(entry);
-            //}
-            data = matching_entries;
+            if(matching_entries!=null) {
+                data.clear();
+                for(LibraryEntry entry : matching_entries){
+                    data.add(entry);
+                }
+            }
             notifyDataSetChanged();
         }
 
@@ -115,9 +113,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         for(LibraryEntry entry : original){
             this.add(entry);
         }
-        //data = original;
         notifyDataSetChanged();
-        System.out.println("Argh");
     }
 
     class ViewHolder{
@@ -141,6 +137,12 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         }
     }
 
+    public void copyToOriginal(ArrayList<LibraryEntry> entries){
+        original.clear();
+        for(LibraryEntry entry : entries){
+            original.add(entry);
+        }
+    }
 
 
 }

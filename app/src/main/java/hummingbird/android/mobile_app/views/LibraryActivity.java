@@ -50,7 +50,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             library_presenter = new LibraryPresenter(this);
             retained_presenter = new RetainedPresenter<LibraryPresenter>();
             retained_presenter.setData(library_presenter);
-            fm.beginTransaction().add(retained_presenter, "data").commit();
+            fm.beginTransaction().add(retained_presenter, "presenter").commit();
         }
         else{
             library_presenter = retained_presenter.getData();
@@ -70,9 +70,8 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()==0){
-                    getCurrentFragment().libraryAdapter.resetDefault();
-                }
+                if (s.length() == 0) {
+                    getCurrentFragment().libraryAdapter.resetDefault();}
             }
         });
     }
@@ -153,5 +152,24 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
         LibraryListFragment current_fragment = (LibraryListFragment) fragment_adapter.getRegisteredFragment(view_pager.getCurrentItem());
         current_fragment.libraryAdapter.getFilter().filter(pattern);
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        library_presenter.onDestroy();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        library_presenter.onResume();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        library_presenter.onPause();
+    }
+
 
 }

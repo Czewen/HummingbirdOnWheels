@@ -66,6 +66,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
             profile_presenter = retained_presenter.getData();
         }
         profile_presenter.bindView(this);
+        if(!profile_presenter.isListening())
+            profile_presenter.onResume();
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             username = extras.getString("ARGS_USERNAME");
@@ -176,6 +178,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         super.onDestroy();
         profile_presenter.unbindView();
         retained_presenter.setData(profile_presenter);
+        profile_presenter.onDestroy();
     }
 
     @Override

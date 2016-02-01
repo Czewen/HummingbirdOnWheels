@@ -7,10 +7,15 @@ public class GetLibraryEvent {
 
     private String auth_token;
     public String username;
+    public String debug;
 
     public GetLibraryEvent(String username, String auth_token){
         this.auth_token = auth_token;
         this.username = username;
+    }
+
+    public void setDebug(String identifier){
+        debug = identifier;
     }
 
     public GetLibraryEvent(String username){

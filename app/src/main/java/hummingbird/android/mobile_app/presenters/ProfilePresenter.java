@@ -39,6 +39,7 @@ public class ProfilePresenter extends Presenter{
         this.profile_view = profile_view;
         current_user_profile_name = profile_view.getCurrentUser();
         EventBus.getDefault().register(this);
+        super.bindService(user_profile_service);
         //library_entries = new ArrayList<LibraryEntry>();//https://static.hummingbird.me/anime/poster_images/000/000/359/large/461736.jpg?1409535570
         //LibraryEntry test_entry = new LibraryEntry();
         //test_entry.anime = new Anime();
@@ -60,7 +61,10 @@ public class ProfilePresenter extends Presenter{
 
     public void getOwnLibrary(String auth_token){
         //profile_view.setResponseError("Calling API for libraries");
-        EventBus.getDefault().post(new GetLibraryEvent("me", auth_token));
+        String s = "profile";
+        GetLibraryEvent event = new GetLibraryEvent("me", auth_token);
+        event.setDebug("from profile");
+        EventBus.getDefault().post(event);
     }
 
     public void updateProfile(User profile_information){
@@ -76,33 +80,22 @@ public class ProfilePresenter extends Presenter{
 
 
     public void onEvent(GetProfileSuccessEvent event){
-        int a = 1;
         updateProfile(event.getUser_profile_information());
     }
 
     public void onEvent(GetLibrarySuccessEvent event){
         library_entries = event.getLibraryEntries();
-        profile_view.setResponseError("allibababa");
         populateLibrary(library_entries);
-        if(library_entries.size()==0){
-            profile_view.setResponseError("Empty entries?????");
-        }
     }
 
     public void populateLibrary(ArrayList<LibraryEntry> library_entries){
         Fragment fragment = profile_view.getCurrentFragment();
-        profile_view.setResponseError("populating entries");
-        if(fragment == null){
-            profile_view.setResponseError("NULL FRAGMENT?????");
-            return;
-        }
-        profile_view.setResponseError(fragment.getClass().toString());
         if(fragment.getClass().equals(LibraryListFragment.class)){
             LibraryListFragment list_fragment = (LibraryListFragment) fragment;
             Bundle parcelable_entries = new Bundle();
             parcelable_entries.putParcelableArrayList("ARG_ENTRIES", library_entries);
             list_fragment.populateList(parcelable_entries);
-            profile_view.setResponseError("went through populate list for fragment");
+            //profile_view.setResponseError("went through populate list for fragment");
         }
     }
 

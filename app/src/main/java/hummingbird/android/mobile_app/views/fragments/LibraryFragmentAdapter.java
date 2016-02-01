@@ -84,7 +84,6 @@ public class LibraryFragmentAdapter extends FragmentPagerAdapter {
         }
         LibraryListFragment library_fragment = (LibraryListFragment) fragment;
         if(!library_fragment.hasEntries()){
-            int a = 1;
             library_fragment.mCallBack.fetchLibraryInformation();
         }
     }

@@ -20,6 +20,10 @@ public class Service {
         EventBus.getDefault().register(this);
     }
 
+    public boolean isListening(){
+        return EventBus.getDefault().isRegistered(this);
+    }
+
     public Retrofit getHummingbirdV1RetrofitInstance(){
         Retrofit api_v1 = new Retrofit.Builder()
                 .baseUrl(v1_end_point)

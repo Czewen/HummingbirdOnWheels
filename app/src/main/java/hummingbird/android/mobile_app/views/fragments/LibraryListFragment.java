@@ -100,6 +100,7 @@ public class LibraryListFragment extends Fragment {
         for(LibraryEntry entry : entries){
             library_entries.add(entry);
         }
+        libraryAdapter.copyToOriginal(entries);
         libraryAdapter.notifyDataSetChanged();
     }
 
