@@ -73,7 +73,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
             username = extras.getString("ARGS_USERNAME");
         }
         setContentView(R.layout.activity_profile);
-        //profile_presenter = new ProfilePresenter(this);
         setupTabs();
         SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         auth_token = prefs.getString("auth_token", "token_missing");
@@ -206,6 +205,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         super.onResume();
         if(!profile_presenter.isListening())
             profile_presenter.onResume();
+        profile_presenter.bindView(this);
     }
 
     public Context getContext(){

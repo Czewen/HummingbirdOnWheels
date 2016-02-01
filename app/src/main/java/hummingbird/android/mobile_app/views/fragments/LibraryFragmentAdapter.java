@@ -17,7 +17,7 @@ import test.PageFragment;
  */
 public class LibraryFragmentAdapter extends FragmentPagerAdapter {
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-    private String[] tabTitles = { "Completed", "Watching", "Dropped", "Plan to Watch", "On hold" };
+    private String[] tabTitles = { "All", "Completed", "Watching", "Dropped", "Plan to Watch", "On hold" };
     final int PAGE_COUNT = tabTitles.length;
     private Context context;
 
