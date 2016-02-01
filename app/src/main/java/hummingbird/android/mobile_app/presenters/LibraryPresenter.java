@@ -35,9 +35,7 @@ public class LibraryPresenter extends Presenter {
             populateLibrary();
         }
         else{
-            GetLibraryEvent event = new GetLibraryEvent(username);
-            event.setDebug("from_library_fetch_library_information_user");
-            EventBus.getDefault().post(event);
+            EventBus.getDefault().post(new GetLibraryEvent(username));
         }
     }
 
@@ -46,11 +44,11 @@ public class LibraryPresenter extends Presenter {
     }
 
     public void getLatestChanges(String username, String auth_token){
-        //EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
+        EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
     }
 
     public void getLatestChanges(String username){
-        //EventBus.getDefault().post(new GetLibraryEvent(username));
+        EventBus.getDefault().post(new GetLibraryEvent(username));
     }
 
     public void onEvent(GetLibrarySuccessEvent event){

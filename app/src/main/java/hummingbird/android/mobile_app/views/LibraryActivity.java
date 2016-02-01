@@ -124,7 +124,6 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     }
 
     public void fetchLibraryInformation(){
-        int b = 1;
         if(username.contentEquals("me")){
             library_presenter.fetchLibraryInformation(username, auth_token);
         }

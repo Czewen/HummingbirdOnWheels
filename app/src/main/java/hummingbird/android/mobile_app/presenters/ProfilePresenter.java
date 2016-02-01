@@ -61,10 +61,7 @@ public class ProfilePresenter extends Presenter{
 
     public void getOwnLibrary(String auth_token){
         //profile_view.setResponseError("Calling API for libraries");
-        String s = "profile";
-        GetLibraryEvent event = new GetLibraryEvent("me", auth_token);
-        event.setDebug("from profile");
-        EventBus.getDefault().post(event);
+        EventBus.getDefault().post(new GetLibraryEvent("me", auth_token));
     }
 
     public void updateProfile(User profile_information){
