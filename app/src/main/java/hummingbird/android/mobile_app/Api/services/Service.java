@@ -17,7 +17,8 @@ public class Service {
     }
 
     public void startListening(){
-        EventBus.getDefault().register(this);
+        if(!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     public boolean isListening(){
