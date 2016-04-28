@@ -2,6 +2,7 @@ package hummingbird.android.mobile_app.presenters;
 
 import de.greenrobot.event.EventBus;
 import hummingbird.android.mobile_app.Api.services.AnimeService;
+import hummingbird.android.mobile_app.Api.services.LibraryService;
 import hummingbird.android.mobile_app.events.GetAnimeEvent;
 import hummingbird.android.mobile_app.events.GetAnimeSuccessEvent;
 import hummingbird.android.mobile_app.models.Anime;
@@ -10,15 +11,19 @@ import hummingbird.android.mobile_app.views.activities.AnimeView;
 /**
  * Created by CzeWen on 2016-01-18.
  */
-public class AnimePresenter {
+public class AnimePresenter extends Presenter {
     AnimeView view;
     AnimeService anime_service;
+    LibraryService library_service;
     Anime anime;
 
     public AnimePresenter(AnimeView view){
         this.view = view;
         anime_service = new AnimeService();
+        library_service = new LibraryService();
         EventBus.getDefault().register(this);
+        super.bindService(anime_service);
+        super.bindService(library_service);
     }
 
     public void bindView(AnimeView view){
