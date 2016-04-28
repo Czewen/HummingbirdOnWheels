@@ -13,10 +13,10 @@
     <string name="anime_watched">Watched</string>
 
     <string-array name="watch_status_values">
-        <item>WATCHING</item>
-        <item>COMPLETETD</item>
-        <item>PLANNING</item>
-        <item>DROPPED</item>
+        <item>Watching</item>
+        <item>Completed</item>
+        <item>Planning</item>
+        <item>Dropped</item>
     </string-array>
     <string name="title_activity_library">Library</string>
 
