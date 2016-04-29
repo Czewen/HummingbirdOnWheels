@@ -5,7 +5,10 @@ import hummingbird.android.mobile_app.Api.services.AnimeService;
 import hummingbird.android.mobile_app.Api.services.LibraryService;
 import hummingbird.android.mobile_app.events.GetAnimeEvent;
 import hummingbird.android.mobile_app.events.GetAnimeSuccessEvent;
+import hummingbird.android.mobile_app.events.UpdateLibraryEvent;
+import hummingbird.android.mobile_app.events.UpdateLibrarySuccessEvent;
 import hummingbird.android.mobile_app.models.Anime;
+import hummingbird.android.mobile_app.models.LibraryEntry;
 import hummingbird.android.mobile_app.views.activities.AnimeView;
 
 /**
@@ -16,6 +19,8 @@ public class AnimePresenter extends Presenter {
     AnimeService anime_service;
     LibraryService library_service;
     Anime anime;
+    LibraryEntry library_entry;
+    boolean is_library_entry = false;
 
     public AnimePresenter(AnimeView view){
         this.view = view;
@@ -39,6 +44,21 @@ public class AnimePresenter extends Presenter {
         view.setCoverPhoto(anime.cover_image);
         view.setTitle(anime.title);
         view.setEpisodeCount(anime.episode_count);
+        if(is_library_entry)
+            view.setEpisodesWatched(library_entry.episodes_watched);
+
+    }
+
+    public void onEvent(UpdateLibrarySuccessEvent event){
+        switch(event.getUpdate_type()){
+            case "episodes_watched":
+                break;
+        }
+    }
+
+    public void setLibraryEntry(LibraryEntry entry){
+        is_library_entry = true;
+        library_entry = entry;
     }
 
 

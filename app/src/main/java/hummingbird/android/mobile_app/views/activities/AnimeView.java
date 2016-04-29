@@ -10,4 +10,6 @@ public interface AnimeView {
     public void setTitle(String title);
 
     public void setEpisodeCount(int episode_count);
+
+    public void setEpisodesWatched(int episodes_watched_value);
 }

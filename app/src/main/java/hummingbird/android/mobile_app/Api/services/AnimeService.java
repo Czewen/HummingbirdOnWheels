@@ -26,11 +26,6 @@ public class AnimeService extends Service {
         api_v1 = super.getHummingbirdV1RetrofitInstance();
         api_v1_service = api_v1.create(HummingbirdApiService.class);
         EventBus.getDefault().register(this);
-        //api_v1 = new Retrofit.Builder()
-         //       .baseUrl(v1_end_point)
-          //      .addConverterFactory(GsonConverterFactory.create())
-           //     .build();
-        //api_v1_service = api_v1.create(HummingbirdApiService.class);
     }
 
     public void onEvent(GetAnimeEvent event){

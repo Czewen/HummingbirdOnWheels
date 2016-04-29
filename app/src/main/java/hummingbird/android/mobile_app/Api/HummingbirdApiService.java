@@ -45,4 +45,6 @@ public interface HummingbirdApiService {
     @GET("anime/{id}")
     Call<Anime> getAnime(@Path("id") int id);
 
+    @POST("libraries/{id}")
+    Call<LibraryEntry> updateLibraryEntry(@Path("id") int library_entry_id, @QueryMap Map<String, String> params);
 }

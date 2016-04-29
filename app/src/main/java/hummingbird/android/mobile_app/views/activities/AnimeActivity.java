@@ -1,6 +1,7 @@
 package hummingbird.android.mobile_app.views.activities;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.models.Anime;
+import hummingbird.android.mobile_app.models.LibraryEntry;
 import hummingbird.android.mobile_app.presenters.AnimePresenter;
 import hummingbird.android.mobile_app.presenters.ProfilePresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
@@ -35,12 +37,17 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime);
         Bundle extras = getIntent().getExtras();
+
+        Intent test = getIntent();
         id = extras.getInt("id");
+
         FragmentManager fm = getFragmentManager();
         retained_presenter = (RetainedPresenter<AnimePresenter>)fm.findFragmentByTag("data");
         if(retained_presenter == null){
             retained_presenter = new RetainedPresenter<AnimePresenter>();
             anime_presenter = new AnimePresenter(this);
+            if(extras.getBoolean("isLibraryEntry"))
+                anime_presenter.setLibraryEntry((LibraryEntry)extras.get("LibraryEntry"));
             fm.beginTransaction().add(retained_presenter, "data");
             retained_presenter.setData(anime_presenter);
         }
@@ -73,7 +80,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
         if(no_episodes == null){
             no_episodes = (TextView) findViewById(R.id.no_episodes);
         }
-        no_episodes.setText("/"+episode_count);
+        no_episodes.setText("/" + episode_count);
         //String number_of_episodes = "/"+episode_count;
     }
 
@@ -84,7 +91,12 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
         String previous_sum = episodes_watched.getText().toString();
         int new_count = Integer.parseInt(previous_sum) + 1;
         episodes_watched.setText(Integer.toString(new_count));
+    }
 
+    public void setEpisodesWatched(int episodes_watched_value){
+        if(episodes_watched == null)
+            episodes_watched = (TextView) findViewById(R.id.episodes_watched);
+        episodes_watched.setText(episodes_watched_value);
     }
 
 

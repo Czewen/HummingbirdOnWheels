@@ -81,7 +81,13 @@ public class LibraryListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), AnimeActivity.class);
                 LibraryEntry entry = (LibraryEntry) list_view.getItemAtPosition(position);
+//                Bundle extras = new Bundle();
+//                extras.putInt("id", entry.anime.id);
+//                extras.putBoolean("isLibraryEntry", true);
+//                extras.putParcelable("LibraryEntry", entry);
                 intent.putExtra("id", entry.anime.id);
+                intent.putExtra("isLibraryEntry", true);
+                intent.putExtra("LibraryEntry" ,new LibraryEntry());
                 startActivity(intent);
             }
         });
