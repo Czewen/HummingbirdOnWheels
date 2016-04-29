@@ -46,7 +46,6 @@ public class AnimePresenter extends Presenter {
         view.setEpisodeCount(anime.episode_count);
         if(is_library_entry)
             view.setEpisodesWatched(library_entry.episodes_watched);
-
     }
 
     public void onEvent(UpdateLibrarySuccessEvent event){

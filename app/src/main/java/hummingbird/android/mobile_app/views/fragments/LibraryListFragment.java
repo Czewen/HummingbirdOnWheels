@@ -85,9 +85,10 @@ public class LibraryListFragment extends Fragment {
 //                extras.putInt("id", entry.anime.id);
 //                extras.putBoolean("isLibraryEntry", true);
 //                extras.putParcelable("LibraryEntry", entry);
+                intent.putExtra("LibraryEntry", entry);
                 intent.putExtra("id", entry.anime.id);
                 intent.putExtra("isLibraryEntry", true);
-                intent.putExtra("LibraryEntry" ,new LibraryEntry());
+//                intent.putExtra("LibraryEntry" ,new LibraryEntry());
                 startActivity(intent);
             }
         });

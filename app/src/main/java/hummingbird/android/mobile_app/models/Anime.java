@@ -23,7 +23,7 @@ public class Anime implements Parcelable {
     public String finished_airing;
     public float community_rating;
     public String age_rating;
-    public ArrayList<Genre> genres;
+    public ArrayList<Genre> genres = new ArrayList<>();
 
     @Override
     public void writeToParcel(Parcel out, int flags){

@@ -96,7 +96,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
     public void setEpisodesWatched(int episodes_watched_value){
         if(episodes_watched == null)
             episodes_watched = (TextView) findViewById(R.id.episodes_watched);
-        episodes_watched.setText(episodes_watched_value);
+        episodes_watched.setText(Integer.toString(episodes_watched_value));
     }
 
 
