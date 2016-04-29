@@ -1,5 +1,8 @@
 package hummingbird.android.mobile_app.presenters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import de.greenrobot.event.EventBus;
 import hummingbird.android.mobile_app.Api.services.AnimeService;
 import hummingbird.android.mobile_app.Api.services.LibraryService;
@@ -51,6 +54,7 @@ public class AnimePresenter extends Presenter {
     public void onEvent(UpdateLibrarySuccessEvent event){
         switch(event.getUpdate_type()){
             case "episodes_watched":
+                view.setEpisodesWatched(event.getResponse().episodes_watched);
                 break;
         }
     }
@@ -60,5 +64,14 @@ public class AnimePresenter extends Presenter {
         library_entry = entry;
     }
 
+    public void updateEpisodesWatched(String auth_token, int current_value){
 
+        int new_value = current_value + 1;
+        if(new_value>=anime.episode_count)
+            return;
+        UpdateLibraryEvent event = new UpdateLibraryEvent(auth_token, anime.id);
+        event.setUpdate_type("episodes_watched");
+        event.value = Integer.toString(new_value);
+        EventBus.getDefault().post(event);
+    }
 }

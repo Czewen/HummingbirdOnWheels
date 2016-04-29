@@ -1,7 +1,9 @@
 package hummingbird.android.mobile_app.views.activities;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,6 +34,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
     TextView title_view;
     TextView episodes_watched;
     TextView no_episodes;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,8 +58,6 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
             anime_presenter = retained_presenter.getData();
         }
         anime_presenter.fetchAnime(id);
-
-
     }
 
 
@@ -85,12 +86,16 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
     }
 
     public void increaseWatchedEpisodes(View view){
-        if(episodes_watched == null){
-            episodes_watched = (TextView) findViewById(R.id.episodes_watched);
-        }
-        String previous_sum = episodes_watched.getText().toString();
-        int new_count = Integer.parseInt(previous_sum) + 1;
-        episodes_watched.setText(Integer.toString(new_count));
+//        if(episodes_watched == null){
+//            episodes_watched = (TextView) findViewById(R.id.episodes_watched);
+//        }
+//        String previous_sum = episodes_watched.getText().toString();
+//
+//        int new_count = Integer.parseInt(previous_sum) + 1;
+//        episodes_watched.setText(Integer.toString(new_count));
+        SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
+        String auth_token = prefs.getString("auth_token", "token_missing");
+        anime_presenter.updateEpisodesWatched(auth_token, Integer.parseInt(episodes_watched.getText().toString()));
     }
 
     public void setEpisodesWatched(int episodes_watched_value){

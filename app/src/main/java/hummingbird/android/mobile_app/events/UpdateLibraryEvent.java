@@ -19,7 +19,9 @@ public class UpdateLibraryEvent {
         this.auth_token = auth_token;
         this.anime_id = Integer.parseInt(anime_id);
     }
-
+    public void setUpdate_type(String update_type){
+        this.update_type = update_type;
+    }
     public String getAuth_Token(){
         return auth_token;
     }

@@ -78,7 +78,7 @@ public class LibraryService extends Service{
         api_v1_service.updateLibraryEntry(event.getAnime_id(), params).enqueue(new Callback<LibraryEntry>() {
             @Override
             public void onResponse(Response<LibraryEntry> response, Retrofit retrofit) {
-                if(response.code()==200)
+                if(response.code()==201 || response.code() == 200)
                     EventBus.getDefault().post(new UpdateLibrarySuccessEvent(update_type, response.body()));
                 else {
                     int http_error_code = response.code();
