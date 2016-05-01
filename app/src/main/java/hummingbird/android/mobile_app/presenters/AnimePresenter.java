@@ -62,6 +62,13 @@ public class AnimePresenter extends Presenter {
             case "episodes_watched":
                 view.setEpisodesWatched(event.getResponse().episodes_watched);
                 break;
+            case "status":
+                String status = event.getResponse().status;
+                int index = watch_status_index_mapping.indexOf(status);
+                view.setWatchStatus(index);
+                if(status.contentEquals("completed"))
+                    view.setEpisodesWatched(anime.episode_count);
+                break;
         }
     }
 
@@ -75,9 +82,18 @@ public class AnimePresenter extends Presenter {
         int new_value = current_value + 1;
         if(new_value>=anime.episode_count)
             return;
+        sendLibraryUpdate(auth_token, "episodes_watched", Integer.toString(new_value));
+    }
+
+    public void updateWatchStatus(String auth_token, int watch_status_index){
+        String value = watch_status_index_mapping.get(watch_status_index);
+        sendLibraryUpdate(auth_token, "status", value);
+    }
+
+    public void sendLibraryUpdate(String auth_token, String update_type, String value){
         UpdateLibraryEvent event = new UpdateLibraryEvent(auth_token, anime.id);
-        event.setUpdate_type("episodes_watched");
-        event.value = Integer.toString(new_value);
+        event.setUpdate_type(update_type);
+        event.value = value;
         EventBus.getDefault().post(event);
     }
 

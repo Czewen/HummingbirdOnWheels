@@ -68,9 +68,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(userIsInteracting){
-                    Object val = parent.getItemAtPosition(position);
-                    int a = 1;
-
+                    anime_presenter.updateWatchStatus(getAuthToken(), position);
                 }
             }
 
@@ -106,9 +104,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
     }
 
     public void increaseWatchedEpisodes(View view){
-        SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
-        String auth_token = prefs.getString("auth_token", "token_missing");
-        anime_presenter.updateEpisodesWatched(auth_token, Integer.parseInt(episodes_watched.getText().toString()));
+        anime_presenter.updateEpisodesWatched(getAuthToken(), Integer.parseInt(episodes_watched.getText().toString()));
     }
 
     public void setEpisodesWatched(int episodes_watched_value){
@@ -126,6 +122,12 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
     public void onUserInteraction(){
         super.onUserInteraction();
         userIsInteracting = true;
+    }
+
+    private String getAuthToken(){
+        SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
+        String auth_token = prefs.getString("auth_token", "token_missing");
+        return auth_token;
     }
 
 
