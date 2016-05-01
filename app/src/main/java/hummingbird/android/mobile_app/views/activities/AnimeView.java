@@ -12,4 +12,6 @@ public interface AnimeView {
     public void setEpisodeCount(int episode_count);
 
     public void setEpisodesWatched(int episodes_watched_value);
+
+    public void setWatchStatus(int watch_status_index);
 }

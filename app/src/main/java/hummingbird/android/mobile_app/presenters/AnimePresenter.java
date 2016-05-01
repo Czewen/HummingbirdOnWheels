@@ -3,6 +3,8 @@ package hummingbird.android.mobile_app.presenters;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
 import de.greenrobot.event.EventBus;
 import hummingbird.android.mobile_app.Api.services.AnimeService;
 import hummingbird.android.mobile_app.Api.services.LibraryService;
@@ -24,6 +26,7 @@ public class AnimePresenter extends Presenter {
     Anime anime;
     LibraryEntry library_entry;
     boolean is_library_entry = false;
+    ArrayList<String> watch_status_index_mapping = new ArrayList<>();
 
     public AnimePresenter(AnimeView view){
         this.view = view;
@@ -32,6 +35,7 @@ public class AnimePresenter extends Presenter {
         EventBus.getDefault().register(this);
         super.bindService(anime_service);
         super.bindService(library_service);
+        setWatch_status_index_mapping();
     }
 
     public void bindView(AnimeView view){
@@ -47,8 +51,10 @@ public class AnimePresenter extends Presenter {
         view.setCoverPhoto(anime.cover_image);
         view.setTitle(anime.title);
         view.setEpisodeCount(anime.episode_count);
-        if(is_library_entry)
+        if(is_library_entry) {
             view.setEpisodesWatched(library_entry.episodes_watched);
+            view.setWatchStatus(watch_status_index_mapping.indexOf(library_entry.status));
+        }
     }
 
     public void onEvent(UpdateLibrarySuccessEvent event){
@@ -73,5 +79,12 @@ public class AnimePresenter extends Presenter {
         event.setUpdate_type("episodes_watched");
         event.value = Integer.toString(new_value);
         EventBus.getDefault().post(event);
+    }
+
+    public void setWatch_status_index_mapping(){
+        watch_status_index_mapping.add(0,"currently-watching");
+        watch_status_index_mapping.add(1, "completed");
+        watch_status_index_mapping.add(2, "plan-to-watch" );
+        watch_status_index_mapping.add(3, "dropped");
     }
 }

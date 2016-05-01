@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -23,7 +25,7 @@ import hummingbird.android.mobile_app.presenters.RetainedPresenter;
 /**
  * Created by CzeWen on 2016-01-18.
  */
-public class AnimeActivity extends AppCompatActivity implements AnimeView {
+public class AnimeActivity extends AppCompatActivity implements AnimeView{
 
     int id;
     Anime anime_obj;
@@ -34,6 +36,9 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
     TextView title_view;
     TextView episodes_watched;
     TextView no_episodes;
+    Spinner watch_status_spinner;
+
+    private boolean userIsInteracting = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -58,8 +63,23 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
             anime_presenter = retained_presenter.getData();
         }
         anime_presenter.fetchAnime(id);
-    }
+        watch_status_spinner = (Spinner) findViewById(R.id.watch_status);
+        watch_status_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(userIsInteracting){
+                    Object val = parent.getItemAtPosition(position);
+                    int a = 1;
 
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 
     public void setCoverPhoto(String url){
         if(cover_photo ==  null) {
@@ -86,13 +106,6 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
     }
 
     public void increaseWatchedEpisodes(View view){
-//        if(episodes_watched == null){
-//            episodes_watched = (TextView) findViewById(R.id.episodes_watched);
-//        }
-//        String previous_sum = episodes_watched.getText().toString();
-//
-//        int new_count = Integer.parseInt(previous_sum) + 1;
-//        episodes_watched.setText(Integer.toString(new_count));
         SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         String auth_token = prefs.getString("auth_token", "token_missing");
         anime_presenter.updateEpisodesWatched(auth_token, Integer.parseInt(episodes_watched.getText().toString()));
@@ -102,6 +115,17 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView {
         if(episodes_watched == null)
             episodes_watched = (TextView) findViewById(R.id.episodes_watched);
         episodes_watched.setText(Integer.toString(episodes_watched_value));
+    }
+
+    public void setWatchStatus(int watch_status_index){
+        userIsInteracting = false;
+        watch_status_spinner.setSelection(watch_status_index);
+    }
+
+    @Override
+    public void onUserInteraction(){
+        super.onUserInteraction();
+        userIsInteracting = true;
     }
 
 
