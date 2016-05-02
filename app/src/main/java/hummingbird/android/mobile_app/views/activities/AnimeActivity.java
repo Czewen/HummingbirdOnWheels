@@ -146,6 +146,30 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
         return auth_token;
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        anime_presenter.onDestroy();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        anime_presenter.onPause();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        anime_presenter.onStop();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        anime_presenter.onResume();
+    }
+
 
 
 
