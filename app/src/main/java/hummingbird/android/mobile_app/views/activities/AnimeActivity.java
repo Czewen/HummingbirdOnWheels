@@ -19,7 +19,6 @@ import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.models.Anime;
 import hummingbird.android.mobile_app.models.LibraryEntry;
 import hummingbird.android.mobile_app.presenters.AnimePresenter;
-import hummingbird.android.mobile_app.presenters.ProfilePresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
 
 /**
@@ -58,6 +57,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
                 anime_presenter.setLibraryEntry((LibraryEntry)extras.get("LibraryEntry"));
             fm.beginTransaction().add(retained_presenter, "data");
             retained_presenter.setData(anime_presenter);
+            anime_presenter.setLibrary_entry_position(extras.getInt("LibraryEntryPosition"));
         }
         else{
             anime_presenter = retained_presenter.getData();
@@ -67,7 +67,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
         watch_status_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(userIsInteracting){
+                if (userIsInteracting) {
                     anime_presenter.updateWatchStatus(getAuthToken(), position);
                 }
             }
@@ -124,11 +124,29 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
         userIsInteracting = true;
     }
 
+    @Override
+    public void onBackPressed() {
+        Bundle bundle = new Bundle();
+        Intent returnIntent = new Intent();
+        if(anime_presenter.hasUpdates()){
+            bundle.putSerializable("LibraryEntryUpdates", anime_presenter.getSuccessfulUpdates());
+            bundle.putInt("LibraryEntryPosition", anime_presenter.getLibrary_entry_position());
+            setResult(RESULT_OK, returnIntent);
+        }
+        else{
+            setResult(RESULT_CANCELED, returnIntent);
+        }
+        returnIntent.putExtras(bundle);
+        super.onBackPressed();
+    }
+
     private String getAuthToken(){
         SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         String auth_token = prefs.getString("auth_token", "token_missing");
         return auth_token;
     }
+
+
 
 
 }

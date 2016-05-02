@@ -15,6 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import android.support.v4.app.Fragment;
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.models.Anime;
@@ -30,6 +34,7 @@ public class LibraryListFragment extends Fragment {
     private ListView list_view;
     private String list_type;
     int position;
+
 
     OnLibaryListSelectedListener mCallBack;
 
@@ -88,8 +93,10 @@ public class LibraryListFragment extends Fragment {
                 intent.putExtra("LibraryEntry", entry);
                 intent.putExtra("id", entry.anime.id);
                 intent.putExtra("isLibraryEntry", true);
+                intent.putExtra("LibraryEntryPosition", position);
 //                intent.putExtra("LibraryEntry" ,new LibraryEntry());
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         libraryAdapter = new LibraryAdapter(getContext(), R.layout.library_entry_item, library_entries);
@@ -122,6 +129,32 @@ public class LibraryListFragment extends Fragment {
     public boolean hasEntries(){
         boolean result = (library_entries.size()==0) ? false : true;
         return result;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == Activity.RESULT_OK){
+            Bundle extras = data.getExtras();
+            int library_entry_position = extras.getInt("LibraryEntryPosition");
+            LibraryEntry entry_to_update = libraryAdapter.getItem(library_entry_position);
+            HashMap<String, String> successful_updates = (HashMap<String, String>)extras.getSerializable("LibraryEntryUpdates");
+
+            for(Map.Entry<String, String> entry : successful_updates.entrySet()){
+                switch(entry.getKey()){
+                    case "status":
+                        entry_to_update.status = entry.getValue();
+                        break;
+                    case "episodes_watched":
+                        entry_to_update.episodes_watched = Integer.parseInt(entry.getValue());
+                        break;
+                    case "rating":
+                        entry_to_update.rating.value = Float.parseFloat(entry.getValue());
+                        break;
+                }
+            }//end for loop
+            //rerender updated library entry view in library list fragment
+            libraryAdapter.notifyDataSetChanged();
+        }
     }
 
 

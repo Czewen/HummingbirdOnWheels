@@ -2,8 +2,10 @@ package hummingbird.android.mobile_app.presenters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
 import hummingbird.android.mobile_app.Api.services.AnimeService;
@@ -27,6 +29,10 @@ public class AnimePresenter extends Presenter {
     LibraryEntry library_entry;
     boolean is_library_entry = false;
     ArrayList<String> watch_status_index_mapping = new ArrayList<>();
+    HashMap<String, String> successful_updates = new HashMap<>();
+
+    int library_entry_position;
+    int total_updates = 0;
 
     public AnimePresenter(AnimeView view){
         this.view = view;
@@ -36,6 +42,7 @@ public class AnimePresenter extends Presenter {
         super.bindService(anime_service);
         super.bindService(library_service);
         setWatch_status_index_mapping();
+
     }
 
     public void bindView(AnimeView view){
@@ -58,12 +65,17 @@ public class AnimePresenter extends Presenter {
     }
 
     public void onEvent(UpdateLibrarySuccessEvent event){
-        switch(event.getUpdate_type()){
+        String update_type = event.getUpdate_type();
+        total_updates++;
+        switch(update_type){
             case "episodes_watched":
-                view.setEpisodesWatched(event.getResponse().episodes_watched);
+                int new_value = event.getResponse().episodes_watched;
+                recordUpdate(update_type, Integer.toString(new_value));
+                view.setEpisodesWatched(new_value);
                 break;
             case "status":
                 String status = event.getResponse().status;
+                recordUpdate(update_type, status);
                 int index = watch_status_index_mapping.indexOf(status);
                 view.setWatchStatus(index);
                 if(status.contentEquals("completed"))
@@ -102,5 +114,28 @@ public class AnimePresenter extends Presenter {
         watch_status_index_mapping.add(1, "completed");
         watch_status_index_mapping.add(2, "plan-to-watch" );
         watch_status_index_mapping.add(3, "dropped");
+    }
+    public void recordUpdate(String update_type, String value){
+        //remove older updates
+        //map should contain latest updates for each update_type
+        if(successful_updates.containsKey(update_type))
+            successful_updates.remove(update_type);
+        successful_updates.put(update_type, value);
+    }
+
+    public HashMap<String, String> getSuccessfulUpdates(){
+        return successful_updates;
+    }
+
+    public void setLibrary_entry_position(int position){
+        library_entry_position = position;
+    }
+
+    public int getLibrary_entry_position(){
+        return library_entry_position;
+    }
+
+    public boolean hasUpdates(){
+        return !(total_updates == 0);
     }
 }
