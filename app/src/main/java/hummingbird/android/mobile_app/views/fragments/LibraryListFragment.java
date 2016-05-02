@@ -42,6 +42,8 @@ public class LibraryListFragment extends Fragment {
         public void fetchLibraryInformation();
 
         public void firstFragmentLoaded();
+
+        public void updateLisWithAnimeActivityUpdates(int id, HashMap<String, String> changes);
     }
 
 
@@ -86,16 +88,10 @@ public class LibraryListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), AnimeActivity.class);
                 LibraryEntry entry = (LibraryEntry) list_view.getItemAtPosition(position);
-//                Bundle extras = new Bundle();
-//                extras.putInt("id", entry.anime.id);
-//                extras.putBoolean("isLibraryEntry", true);
-//                extras.putParcelable("LibraryEntry", entry);
                 intent.putExtra("LibraryEntry", entry);
                 intent.putExtra("id", entry.anime.id);
                 intent.putExtra("isLibraryEntry", true);
                 intent.putExtra("LibraryEntryPosition", position);
-//                intent.putExtra("LibraryEntry" ,new LibraryEntry());
-//                startActivity(intent);
                 startActivityForResult(intent, 1);
             }
         });
@@ -138,11 +134,13 @@ public class LibraryListFragment extends Fragment {
             int library_entry_position = extras.getInt("LibraryEntryPosition");
             LibraryEntry entry_to_update = libraryAdapter.getItem(library_entry_position);
             HashMap<String, String> successful_updates = (HashMap<String, String>)extras.getSerializable("LibraryEntryUpdates");
-
+            boolean remove_entry = false;
             for(Map.Entry<String, String> entry : successful_updates.entrySet()){
                 switch(entry.getKey()){
                     case "status":
-                        entry_to_update.status = entry.getValue();
+                        //since the entry does not match the current filter we have to remove it from view
+                        if(!list_type.toLowerCase().contentEquals("all"))
+                            remove_entry = true;
                         break;
                     case "episodes_watched":
                         entry_to_update.episodes_watched = Integer.parseInt(entry.getValue());
@@ -152,10 +150,16 @@ public class LibraryListFragment extends Fragment {
                         break;
                 }
             }//end for loop
+            if(remove_entry) {
+                library_entries.remove(entry_to_update);
+                libraryAdapter.remove(entry_to_update);
+            }
             //rerender updated library entry view in library list fragment
             libraryAdapter.notifyDataSetChanged();
         }
     }
+
+
 
 
 

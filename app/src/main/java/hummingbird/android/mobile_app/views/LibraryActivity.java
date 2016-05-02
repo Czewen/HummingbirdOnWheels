@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.presenters.LibraryPresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
@@ -168,6 +170,10 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     public void onPause(){
         super.onPause();
         library_presenter.onPause();
+    }
+
+    public void updateLisWithAnimeActivityUpdates(int id, HashMap<String, String> changes){
+        library_presenter.updateOldLibraryEntry(id, changes);
     }
 
 

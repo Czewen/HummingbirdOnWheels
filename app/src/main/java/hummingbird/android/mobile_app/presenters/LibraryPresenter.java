@@ -3,6 +3,8 @@ package hummingbird.android.mobile_app.presenters;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import hummingbird.android.mobile_app.Api.services.LibraryService;
@@ -74,6 +76,7 @@ public class LibraryPresenter extends Presenter {
                 args.putParcelableArrayList("ARG_ENTRIES", matching_entries);
             }
             library_list_view.populateList(args);
+
         }
     }
 
@@ -93,4 +96,26 @@ public class LibraryPresenter extends Presenter {
         }
         return json_result + "is not mappable to list type";
     }
+
+
+    public void updateOldLibraryEntry(int id, HashMap<String, String> changes){
+        for(LibraryEntry library_entry : library_entries){
+            if(library_entry.id == id) {
+                for (Map.Entry<String, String> entry : changes.entrySet())
+                    switch (entry.getKey()) {
+                        case "status":
+                            library_entry.status = entry.getValue();
+                            break;
+                        case "episodes_watched":
+                            library_entry.episodes_watched = Integer.parseInt(entry.getValue());
+                            break;
+                        case "rating":
+                            library_entry.rating.value = Float.parseFloat(entry.getValue());
+                            break;
+                    }
+                break;
+            }
+        }
+    }
+
 }

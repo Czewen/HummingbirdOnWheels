@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 import hummingbird.android.mobile_app.Api.helper.CircleTransform;
@@ -235,5 +236,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     public void firstFragmentLoaded(){
         //STUB
+    }
+
+    public void updateLisWithAnimeActivityUpdates(int id, HashMap<String, String> changes){
+       //STUB
     }
 }
