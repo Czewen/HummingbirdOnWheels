@@ -137,6 +137,7 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
             setResult(RESULT_CANCELED, returnIntent);
         }
         returnIntent.putExtras(bundle);
+        finish();
         super.onBackPressed();
     }
 

@@ -34,6 +34,7 @@ public class LibraryListFragment extends Fragment {
     private ListView list_view;
     private String list_type;
     int position;
+    boolean needs_update = false;
 
 
     OnLibaryListSelectedListener mCallBack;
@@ -43,7 +44,7 @@ public class LibraryListFragment extends Fragment {
 
         public void firstFragmentLoaded();
 
-        public void updateLisWithAnimeActivityUpdates(int id, HashMap<String, String> changes);
+        public void updateListWithAnimeActivityUpdates(int id, HashMap<String, String> changes);
     }
 
 
@@ -150,17 +151,20 @@ public class LibraryListFragment extends Fragment {
                         break;
                 }
             }//end for loop
+            mCallBack.updateListWithAnimeActivityUpdates(entry_to_update.id, successful_updates);
             if(remove_entry) {
                 library_entries.remove(entry_to_update);
                 libraryAdapter.remove(entry_to_update);
             }
+
             //rerender updated library entry view in library list fragment
             libraryAdapter.notifyDataSetChanged();
         }
     }
 
-
-
+    public void setNeeds_update(boolean value){
+        needs_update = value;
+    }
 
 
 }

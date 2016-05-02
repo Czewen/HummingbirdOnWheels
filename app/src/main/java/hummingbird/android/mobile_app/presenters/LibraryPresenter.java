@@ -42,16 +42,14 @@ public class LibraryPresenter extends Presenter {
     }
 
     public void fetchLibraryInformation(String username, String auth_token){
-        EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
+        if(library_entries!=null){
+            populateLibrary();
+        }
+        else{
+            EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
+        }
     }
 
-    public void getLatestChanges(String username, String auth_token){
-        EventBus.getDefault().post(new GetLibraryEvent(username, auth_token));
-    }
-
-    public void getLatestChanges(String username){
-        EventBus.getDefault().post(new GetLibraryEvent(username));
-    }
 
     public void onEvent(GetLibrarySuccessEvent event){
         library_entries = event.getLibraryEntries();
@@ -76,7 +74,7 @@ public class LibraryPresenter extends Presenter {
                 args.putParcelableArrayList("ARG_ENTRIES", matching_entries);
             }
             library_list_view.populateList(args);
-
+            library_list_view.setNeeds_update(false);
         }
     }
 
@@ -104,7 +102,14 @@ public class LibraryPresenter extends Presenter {
                 for (Map.Entry<String, String> entry : changes.entrySet())
                     switch (entry.getKey()) {
                         case "status":
-                            library_entry.status = entry.getValue();
+                            String status = entry.getValue();
+                            library_entry.status = status;
+                            //list with matching watch status needs to add this entry
+                            LibraryListFragment fragment = view.getFragment(mapJsonResultToListType(status));
+                            //null is returned if the fragment has not been instantiated yet, in that case we don't need to call for an update
+                            //as it'll fetch for fresh values on creation. Only call for an update on old fragments.
+                            if(fragment!=null)
+                                fragment.setNeeds_update(true);
                             break;
                         case "episodes_watched":
                             library_entry.episodes_watched = Integer.parseInt(entry.getValue());

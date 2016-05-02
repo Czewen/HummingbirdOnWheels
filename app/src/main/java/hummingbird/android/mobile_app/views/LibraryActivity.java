@@ -138,6 +138,10 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
         return (LibraryListFragment) fragment_adapter.getRegisteredFragment(view_pager.getCurrentItem());
     }
 
+    public LibraryListFragment getFragment(String name){
+        return (LibraryListFragment) fragment_adapter.getRegisteredFragment(name);
+    }
+
     public void firstFragmentLoaded(){
         if(first_page_loaded==false){
             fragment_adapter.onFragmentSelected(0);
@@ -172,9 +176,11 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
         library_presenter.onPause();
     }
 
-    public void updateLisWithAnimeActivityUpdates(int id, HashMap<String, String> changes){
+    public void updateListWithAnimeActivityUpdates(int id, HashMap<String, String> changes){
         library_presenter.updateOldLibraryEntry(id, changes);
     }
+
+
 
 
 }

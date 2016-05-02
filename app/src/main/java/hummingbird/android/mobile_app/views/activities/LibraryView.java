@@ -1,5 +1,6 @@
 package hummingbird.android.mobile_app.views.activities;
 
+import hummingbird.android.mobile_app.views.fragments.LibraryFragmentAdapter;
 import hummingbird.android.mobile_app.views.fragments.LibraryListFragment;
 
 /**
@@ -8,4 +9,6 @@ import hummingbird.android.mobile_app.views.fragments.LibraryListFragment;
 public interface LibraryView {
 
     public LibraryListFragment getCurrentFragment();
+
+    public LibraryListFragment getFragment(String name);
 }

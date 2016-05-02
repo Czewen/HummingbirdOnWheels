@@ -83,9 +83,20 @@ public class LibraryFragmentAdapter extends FragmentPagerAdapter {
             fragment = registeredFragments.get(position);
         }
         LibraryListFragment library_fragment = (LibraryListFragment) fragment;
-        if(!library_fragment.hasEntries()){
+//        if(!library_fragment.hasEntries() || library_fragment.needs_update)
             library_fragment.mCallBack.fetchLibraryInformation();
+
+
+    }
+
+    public Fragment getRegisteredFragment(String name){
+        int i=0;
+        while(i<tabTitles.length){
+            if(name.toLowerCase().contentEquals(tabTitles[i].toLowerCase()))
+                break;
+            i++;
         }
+        return getRegisteredFragment(i);
     }
 
 

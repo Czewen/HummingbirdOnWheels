@@ -238,7 +238,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         //STUB
     }
 
-    public void updateLisWithAnimeActivityUpdates(int id, HashMap<String, String> changes){
+    public void updateListWithAnimeActivityUpdates(int id, HashMap<String, String> changes){
        //STUB
     }
 }
