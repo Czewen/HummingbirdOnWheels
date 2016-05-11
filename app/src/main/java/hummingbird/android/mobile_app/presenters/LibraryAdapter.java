@@ -176,7 +176,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         container.removeAllViews();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         int px = dp_to_pixels(5);
-        layoutParams.setMargins(px, 0, px, 0);
+        layoutParams.setMargins(0, 0, px, 0);
         for(Genre genre : genres){
             TextView genre_value = new TextView(getContext());
             genre_value.setText(genre.name);

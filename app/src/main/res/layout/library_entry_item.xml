@@ -27,6 +27,8 @@
         android:layout_alignLeft="@+id/library_entry_title"
         android:layout_alignStart="@+id/library_entry_title"
         android:layout_alignBottom="@+id/library_entry_image"
-        android:layout_below="@+id/library_entry_title" />
+        android:layout_below="@+id/library_entry_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

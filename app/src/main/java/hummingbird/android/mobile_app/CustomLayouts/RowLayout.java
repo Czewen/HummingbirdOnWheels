@@ -12,6 +12,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import hummingbird.android.mobile_app.R;
 
@@ -44,12 +45,15 @@ public class RowLayout extends ViewGroup {
         rows.add(currentRow);
         for (View child : getLayoutChildren()) {
             LayoutParams childLayoutParams = child.getLayoutParams();
+            ViewGroup.MarginLayoutParams margin_childLayoutParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
+            int childLeftMargin = margin_childLayoutParams.leftMargin;
             int childWidthSpec = createChildMeasureSpec(childLayoutParams.width, maxInternalWidth, widthMode);
             int childHeightSpec = createChildMeasureSpec(childLayoutParams.height, maxInternalHeight, heightMode);
             child.measure(childWidthSpec, childHeightSpec);
             int childWidth = child.getMeasuredWidth();
             int childHeight = child.getMeasuredHeight();
-            if (currentRow.wouldExceedMax(childWidth)) {
+            //Stay on the current row as long as we can fit the view (without margin on the right) in the current row
+            if (currentRow.wouldExceedMax(childWidth + childLeftMargin)) {
                 currentRow = new RowMeasurement(maxInternalWidth, widthMode);
                 rows.add(currentRow);
             }
@@ -96,15 +100,20 @@ public class RowLayout extends ViewGroup {
         for (View child : getLayoutChildren()) {
             final int childWidth = child.getMeasuredWidth();
             final int childHeight = child.getMeasuredHeight();
-            if (x + childWidth > widthOffset) {
+            ViewGroup.MarginLayoutParams childMarginLayoutParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
+            final int childLeftMargin = childMarginLayoutParams.leftMargin;
+            final int childRightMargin = childMarginLayoutParams.rightMargin;
+            //Stay on the current row as long as we can fit the view (without margin on the right) in the current row
+            if (x + childWidth + childLeftMargin > widthOffset) {
                 x = getPaddingLeft();
                 y += currentRow.height + verticalSpacing;
                 if (rowIterator.hasNext()) {
                     currentRow = rowIterator.next();
                 }
             }
-            child.layout(x, y, x + childWidth, y + childHeight);
-            x += childWidth + horizontalSpacing;
+//            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)child.getLayoutParams();
+            child.layout(x + childLeftMargin, y, x + childWidth + childRightMargin, y + childHeight);
+            x += childWidth + horizontalSpacing + childLeftMargin + childRightMargin;
         }
     }
 
