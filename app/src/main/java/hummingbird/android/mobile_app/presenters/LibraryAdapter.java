@@ -1,19 +1,25 @@
 package hummingbird.android.mobile_app.presenters;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import android.widget.Filter;
+import android.app.Activity;
 
+import hummingbird.android.mobile_app.CustomLayouts.RowLayout;
 import hummingbird.android.mobile_app.R;
+import hummingbird.android.mobile_app.models.Genre;
 import hummingbird.android.mobile_app.models.LibraryEntry;
 
 /**
@@ -35,6 +41,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
     }
 
     @Override
+    //convertView is an old view that is no longer used
     public View getView(int position, View convertView, ViewGroup parent){
         ViewHolder view_holder = null;
         View row = convertView;
@@ -46,7 +53,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
             view_holder = new ViewHolder();
             view_holder.library_entry_image = (ImageView) row.findViewById(R.id.library_entry_image);
             view_holder.title = (TextView) row.findViewById(R.id.library_entry_title);
-
+            view_holder.library_entry_genre_container = (RowLayout) row.findViewById(R.id.library_entry_genre);
             row.setTag(view_holder);
         }
         else{
@@ -60,6 +67,8 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
                 .centerCrop()
                 .into(view_holder.getLibraryEntryImage());
         view_holder.getTitle().setText(entry.anime.title);
+        ArrayList<Genre> genre_array = entry.anime.genres;
+        addLibraryEntryGenreValues(entry.anime.genres, view_holder.getLibraryEntryGenreContainer());
         return row;
     }
 
@@ -106,6 +115,11 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
             notifyDataSetChanged();
         }
 
+        public boolean checkOtherFilters(){
+
+            return false;
+        }
+
     }
 
     public void resetDefault(){
@@ -120,6 +134,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
 
         ImageView library_entry_image;
         TextView title;
+        RowLayout library_entry_genre_container;
 
         public ImageView getLibraryEntryImage(){
             //if(this.library_entry_image == null){
@@ -135,6 +150,10 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
             return title;
 
         }
+
+        public RowLayout getLibraryEntryGenreContainer(){
+            return library_entry_genre_container;
+        }
     }
 
     public void copyToOriginal(ArrayList<LibraryEntry> entries){
@@ -144,5 +163,26 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         }
     }
 
+
+    public int dp_to_pixels(int dp){
+        //px = dp * (dpi / 160)
+        //logicalDensity = dpi/160
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float logicalDensity = metrics.density;
+        return (int) Math.ceil(dp * logicalDensity);
+    }
+
+    public void addLibraryEntryGenreValues(ArrayList<Genre> genres, RowLayout container){
+        container.removeAllViews();
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        int px = dp_to_pixels(5);
+        layoutParams.setMargins(px, 0, px, 0);
+        for(Genre genre : genres){
+            TextView genre_value = new TextView(getContext());
+            genre_value.setText(genre.name);
+            genre_value.setTextSize(14);
+            container.addView(genre_value, layoutParams);
+        }
+    }
 
 }
