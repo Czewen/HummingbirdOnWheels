@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import hummingbird.android.mobile_app.R;
+import hummingbird.android.mobile_app.presenters.LibraryAdapter;
 import hummingbird.android.mobile_app.presenters.LibraryPresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
 import hummingbird.android.mobile_app.views.fragments.LibraryFragmentAdapter;
@@ -77,8 +78,19 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String genre_type = (String) search_filter_spinner.getItemAtPosition(position);
                 updateFilterByValueSpinner(genre_type);
+                if(genre_type.contentEquals("")){
+                    filter_listings(search_filter);
+                }
             }
 
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
+
+        filter_by_value_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                filter_listings(search_filter);
+            }
             public void onNothingSelected(AdapterView<?> parent){
             }
         });
@@ -93,7 +105,14 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    getCurrentFragment().libraryAdapter.resetDefault();}
+                    getCurrentFragment().libraryAdapter.resetDefault();
+                    if(otherFiltersEnabled()){
+                        String search_filter_type = (String) search_filter_spinner.getSelectedItem();
+                        String filter_value = (String) filter_by_value_spinner.getSelectedItem();
+                        ((LibraryAdapter.LibraryFilter<String>) getCurrentFragment().libraryAdapter.getFilter()).setOtherFiltersValue(search_filter_type, filter_value);
+                        getCurrentFragment().libraryAdapter.getFilter().filter("");
+                    }
+                }
             }
         });
     }
@@ -173,11 +192,20 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
         if(search_filter==null){
             search_filter = (TextView) findViewById(R.id.library_text_filter);
         }
+        getCurrentFragment().libraryAdapter.resetDefault();
         CharSequence pattern = search_filter.getText().toString();
         LibraryListFragment current_fragment = (LibraryListFragment) fragment_adapter.getRegisteredFragment(view_pager.getCurrentItem());
+        if(otherFiltersEnabled()){
+            String filter_type = (String) search_filter_spinner.getSelectedItem();
+            String filter_value = (String) filter_by_value_spinner.getSelectedItem();
+            ((LibraryAdapter.LibraryFilter<String>) getCurrentFragment().libraryAdapter.getFilter()).setOtherFiltersValue(filter_type, filter_value);
+        }
+        else{
+            ((LibraryAdapter.LibraryFilter<String>) getCurrentFragment().libraryAdapter.getFilter()).setOtherFiltersValue(null, null);
+        }
         current_fragment.libraryAdapter.getFilter().filter(pattern);
     }
-
+    
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -214,15 +242,25 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
                 resource_id = R.array.airing_status_values;
                 break;
             default:
+                filter_value_adapter.clear();
+                filter_value_adapter.notifyDataSetChanged();
                 return;
         }
         filter_by_value_array.clear();
         String[] new_spinner_values = getResources().getStringArray(resource_id);
         filter_by_value_array.addAll(Arrays.asList(new_spinner_values));
-        int a = 1;
         filter_value_adapter.notifyDataSetChanged();
     }
 
-
+    public boolean otherFiltersEnabled(){
+        if(search_filter_spinner ==  null)
+            search_filter_spinner = (Spinner) findViewById(R.id.library_search_filter_spinner);
+        if(filter_by_value_spinner == null)
+            filter_by_value_spinner = (Spinner) findViewById(R.id.filter_by_value_spinner);
+        String filter_type = (String) search_filter_spinner.getSelectedItem();
+        if(filter_type.contentEquals(""))
+            return false;
+        return true;
+    }
 
 }

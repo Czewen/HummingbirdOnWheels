@@ -80,8 +80,10 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
         return search_filter; //stub wip
     }
 
-    private class LibraryFilter<E> extends Filter{
+    public class LibraryFilter<E> extends Filter{
 
+        private String extra_filter_type = null;
+        private String extra_filter_value = null;
 
         @Override
         public FilterResults performFiltering(CharSequence constraint){
@@ -90,21 +92,32 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
              //   filter_results.values = data;
              //   filter_results.count = data.size();
             //}
-            if(constraint!=null && constraint.length()>0){
+            if(hasConstraints(constraint)){
                 ArrayList<LibraryEntry> filtered_entries = new ArrayList<>();
                 for(LibraryEntry entry : original){
-                    if(entry.anime.title.toLowerCase().contains(constraint))
+                    if(constraint!=null && constraint.length()>0 && !(entry.anime.title.toLowerCase().contains(constraint)))
+                        continue;
+                    if(extra_filter_type!=null && matchesExtraConstraint(entry) == false)
+                        continue;
                         filtered_entries.add(entry);
                 }
                 filter_results.values = filtered_entries;
                 filter_results.count = filtered_entries.size();
             }
+//            if(constraint!=null && constraint.length()>0){
+//                ArrayList<LibraryEntry> filtered_entries = new ArrayList<>();
+//                for(LibraryEntry entry : original){
+//                    if(entry.anime.title.toLowerCase().contains(constraint))
+//                        filtered_entries.add(entry);
+//                }
+//                filter_results.values = filtered_entries;
+//                filter_results.count = filtered_entries.size();
+//            }
             return filter_results;
         }
 
         @Override
         public void publishResults(CharSequence constraint, FilterResults results){
-            ArrayList<LibraryEntry> temp = data;
             ArrayList<LibraryEntry> matching_entries = (ArrayList<LibraryEntry>) results.values;
             if(matching_entries!=null) {
                 data.clear();
@@ -115,18 +128,41 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
             notifyDataSetChanged();
         }
 
-        public boolean checkOtherFilters(){
+        public void setOtherFiltersValue(String filter_type, String filter_value){
+            extra_filter_type = filter_type;
+            extra_filter_value = filter_value;
+        }
 
+        private boolean hasConstraints(CharSequence constraint){
+            if((constraint==null || constraint.length()==0) && extra_filter_type == null)
+                return false;
+            return true;
+        }
+
+        private boolean matchesExtraConstraint(LibraryEntry entry){
+            switch(extra_filter_type.toLowerCase()){
+                case "genre":
+                    for(Genre genre : entry.anime.genres){
+                        if(genre.name.toLowerCase().contains(extra_filter_value.toLowerCase()))
+                            return true;
+                    }
+                    break;
+                case "rating":
+                    return true;
+
+                case "status":
+                    return true;
+            }
             return false;
         }
+
 
     }
 
     public void resetDefault(){
+        data.clear();
         this.clear();
-        for(LibraryEntry entry : original){
-            this.add(entry);
-        }
+        this.addAll(original);
         notifyDataSetChanged();
     }
 
@@ -184,5 +220,6 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
             container.addView(genre_value, layoutParams);
         }
     }
+
 
 }
