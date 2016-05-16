@@ -10,10 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -21,13 +18,11 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
-import java.util.List;
 
 import hummingbird.android.mobile_app.Api.helper.CircleTransform;
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.presenters.ProfilePresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
-import hummingbird.android.mobile_app.views.LibraryActivity;
 import hummingbird.android.mobile_app.views.ProfileView;
 import hummingbird.android.mobile_app.views.fragments.LibraryListFragment;
 import hummingbird.android.mobile_app.views.fragments.ProfileFragmentPagerAdapter;

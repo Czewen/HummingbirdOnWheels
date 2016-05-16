@@ -51,7 +51,7 @@
                 android:value="hummingbird.android.mobile_app.views.MainActivity" />
         </activity>
         <activity
-            android:name=".views.LibraryActivity"
+            android:name=".views.activities.LibraryActivity"
             android:label="@string/title_activity_library" >
         </activity>
     </application>

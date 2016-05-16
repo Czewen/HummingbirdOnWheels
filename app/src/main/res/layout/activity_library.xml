@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="hummingbird.android.mobile_app.views.LibraryActivity"
+    tools:context="hummingbird.android.mobile_app.views.activities.LibraryActivity"
     android:id="@+id/LinearLayout"
     android:focusable="true"
     android:focusableInTouchMode="true">
@@ -39,10 +39,21 @@
         <Spinner
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner2"
+            android:id="@+id/library_search_filter_spinner"
+            android:entries="@array/library_search_filters"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_by_value_spinner"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/library_search_filter_spinner"
+            android:layout_toEndOf="@+id/library_search_filter_spinner" />
 
     </RelativeLayout>
 

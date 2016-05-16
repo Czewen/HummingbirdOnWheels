@@ -20,4 +20,41 @@
     </string-array>
     <string name="title_activity_library">Library</string>
 
+    <string-array name="library_search_filters">
+        <item></item>
+        <item>Genre</item>
+        <item>Status</item>
+        <item>Rating</item>
+    </string-array>
+
+    <string-array name="genre_values">
+        <item>Action</item>
+        <item>Sci-Fi</item>
+        <item>Space</item>
+        <item>Romance</item>
+        <item>Military</item>
+        <item>Mecha</item>
+        <item>Slice of Life</item>
+        <item>Drama</item>
+        <item>Music</item>
+        <item>Fantasy</item>
+        <item>Adventure</item>
+        <item>Horror</item>
+        <item>Mystery</item>
+        <item>Comedy</item>
+        <item>Magic</item>
+        <item>Parody</item>
+    </string-array>
+
+    <string-array name="airing_status_values">
+        <item>Airing</item>
+        <item>Finished</item>
+    </string-array>
+
+    <string-array name="rating_values">
+        <item>Positive</item>
+        <item>Neutral</item>
+        <item>Negative</item>
+    </string-array>
+
     </resources>
