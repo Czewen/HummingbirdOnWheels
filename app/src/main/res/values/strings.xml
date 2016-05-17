@@ -20,6 +20,13 @@
     </string-array>
     <string name="title_activity_library">Library</string>
 
+
+    <string-array name="left_menu_items">
+        <item>Profile</item>
+        <item>Library</item>
+        <item>Search</item>
+    </string-array>
+
     <string-array name="library_search_filters">
         <item></item>
         <item>Genre</item>
@@ -56,5 +63,6 @@
         <item>Neutral</item>
         <item>Negative</item>
     </string-array>
+
 
     </resources>

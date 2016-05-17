@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import hummingbird.android.mobile_app.Api.helper.CircleTransform;
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.presenters.ProfilePresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
+import hummingbird.android.mobile_app.views.NavDrawerSetup;
 import hummingbird.android.mobile_app.views.ProfileView;
 import hummingbird.android.mobile_app.views.fragments.LibraryListFragment;
 import hummingbird.android.mobile_app.views.fragments.ProfileFragmentPagerAdapter;
@@ -40,6 +43,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     RelativeLayout cover_photo_layout;
     private String auth_token;
 
+    private ListView menuDrawerList;
+    private DrawerLayout menuDrawerLayout;
+    private String[] left_drawer_items;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
             retained_presenter = new RetainedPresenter<ProfilePresenter>();
             retained_presenter.setData(profile_presenter);
             fm.beginTransaction().add(retained_presenter, "data").commit();
-
         }
         else{
             profile_presenter = retained_presenter.getData();
@@ -79,6 +85,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         else{
             setName(auth_token);
         }
+
+        //get references to widgets
+        menuDrawerList = (ListView) findViewById(R.id.left_drawer);
+        NavDrawerSetup nav_drawer = new NavDrawerSetup(menuDrawerList, this);
+
     }
 
 

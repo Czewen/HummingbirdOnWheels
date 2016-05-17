@@ -115,7 +115,7 @@
         android:choiceMode="singleChoice"
         android:id="@+id/left_drawer"
         android:divider="@android:color/transparent"
-        android:background="#111"
+        android:background="#ffffff"
         android:dividerHeight="0dp"
         ></ListView>
 

@@ -205,7 +205,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
         }
         current_fragment.libraryAdapter.getFilter().filter(pattern);
     }
-    
+
     @Override
     public void onDestroy(){
         super.onDestroy();
