@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         //Intent intent = new Intent(this, DisplayMessageActivity.class);
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra(EXTRA_MESSAGE, auth_token);
-        intent.putExtra("ARGS_USERNAME", username);
+        intent.putExtra("username", username);
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("auth_token", auth_token);

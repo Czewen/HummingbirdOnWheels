@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.presenters.LibraryAdapter;
 import hummingbird.android.mobile_app.presenters.LibraryPresenter;
 import hummingbird.android.mobile_app.presenters.RetainedPresenter;
+import hummingbird.android.mobile_app.views.NavDrawerSetup;
 import hummingbird.android.mobile_app.views.fragments.LibraryFragmentAdapter;
 import hummingbird.android.mobile_app.views.fragments.LibraryListFragment;
 
@@ -44,6 +46,9 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
     Spinner filter_by_value_spinner;
     ArrayList<String> filter_by_value_array;
     ArrayAdapter<String> filter_value_adapter;
+
+    NavDrawerSetup nav_drawer;
+    private ListView menuDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +70,19 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
         else{
             library_presenter = retained_presenter.getData();
         }
-
+        //setup library tabs
         setupTabs();
-        search_filter_spinner = (Spinner) findViewById(R.id.library_search_filter_spinner);
 
+        //setup left navigation menu
+        menuDrawerList = (ListView) findViewById(R.id.left_drawer);
+        nav_drawer = new NavDrawerSetup(menuDrawerList, this);
+
+        //set up spinner filter widgets (filtering by extra criteria)
+        search_filter_spinner = (Spinner) findViewById(R.id.library_search_filter_spinner);
         filter_by_value_array = new ArrayList<String>();
         filter_by_value_spinner = (Spinner) findViewById(R.id.filter_by_value_spinner);
         filter_value_adapter = new ArrayAdapter<String>(filter_by_value_spinner.getContext(), R.layout.textview_layout, filter_by_value_array);
         filter_by_value_spinner.setAdapter(filter_value_adapter);
-
         search_filter_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String genre_type = (String) search_filter_spinner.getItemAtPosition(position);
@@ -86,7 +95,6 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             public void onNothingSelected(AdapterView<?> parent){
             }
         });
-
         filter_by_value_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
                 filter_listings(search_filter);
@@ -94,6 +102,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryView,
             public void onNothingSelected(AdapterView<?> parent){
             }
         });
+        //set up filter by text widget
         search_filter = (EditText) findViewById(R.id.library_text_filter);
         search_filter.addTextChangedListener(new TextWatcher() {
             @Override

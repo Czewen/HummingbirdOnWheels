@@ -46,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     private ListView menuDrawerList;
     private DrawerLayout menuDrawerLayout;
     private String[] left_drawer_items;
+    NavDrawerSetup nav_drawer;
 
 
     @Override
@@ -72,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
             profile_presenter.onResume();
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
-            username = extras.getString("ARGS_USERNAME");
+            username = extras.getString("username");
         }
         setContentView(R.layout.activity_profile);
         setupTabs();
@@ -88,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
         //get references to widgets
         menuDrawerList = (ListView) findViewById(R.id.left_drawer);
-        NavDrawerSetup nav_drawer = new NavDrawerSetup(menuDrawerList, this);
+        nav_drawer = new NavDrawerSetup(menuDrawerList, this);
 
     }
 

@@ -53,7 +53,7 @@ public class NavDrawerSetup {
                 if (position == selected_item_index)
                 {
                     //TODO: set the proper selection color here:
-                    renderer.setBackgroundResource(android.R.color.holo_green_light);
+                    renderer.setBackgroundResource(android.R.color.holo_orange_light);
                 }
                 return renderer;
             }
@@ -68,7 +68,7 @@ public class NavDrawerSetup {
         Intent intent;
         SharedPreferences prefs = current_activity.getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         String auth_token = prefs.getString("auth_token", "token_missing");
-        String username = extras.getString("ARGS_USERNAME");
+        String username = extras.getString("username");
         switch(next_activity){
             case "Profile":
                 intent = new Intent(current_activity, ProfileActivity.class);
