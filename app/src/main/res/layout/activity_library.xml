@@ -48,9 +48,20 @@
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Filter by:"
+                android:id="@+id/textView3"
+                android:layout_below="@+id/library_text_filter"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="5dp" />
+
             <Spinner
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:id="@+id/library_search_filter_spinner"
                 android:entries="@array/library_search_filters"
                 android:layout_alignParentBottom="true"
@@ -61,12 +72,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/filter_by_value_spinner"
-                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/library_search_filter_spinner"
+                android:layout_marginLeft="17dp"
+                android:layout_marginStart="17dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/library_search_filter_spinner"
-                android:layout_toEndOf="@+id/library_search_filter_spinner" />
-
+                android:layout_alignTop="@+id/library_search_filter_spinner" />
 
 
         </RelativeLayout>
