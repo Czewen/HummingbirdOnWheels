@@ -16,6 +16,4 @@ public interface LoginView {
 
     public void displayLoginFailed(String reason);
 
-    public void editTest(String test);
-
 }

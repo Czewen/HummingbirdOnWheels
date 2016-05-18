@@ -1,5 +1,6 @@
 package hummingbird.android.mobile_app.views.activities;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -24,7 +26,7 @@ import hummingbird.android.mobile_app.presenters.RetainedPresenter;
 /**
  * Created by CzeWen on 2016-01-18.
  */
-public class AnimeActivity extends AppCompatActivity implements AnimeView{
+public class AnimeActivity extends Activity implements AnimeView{
 
     int id;
     Anime anime_obj;
@@ -63,7 +65,12 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
             anime_presenter = retained_presenter.getData();
         }
         anime_presenter.fetchAnime(id);
+
+        //setup watch status spinner
+        String[] watch_status_spinner_values = getResources().getStringArray(R.array.watch_status_values);
+        ArrayAdapter<String> watch_status_adapter = new ArrayAdapter<String>(this, R.layout.watch_status_layout, watch_status_spinner_values);
         watch_status_spinner = (Spinner) findViewById(R.id.watch_status);
+        watch_status_spinner.setAdapter(watch_status_adapter);
         watch_status_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -71,10 +78,8 @@ public class AnimeActivity extends AppCompatActivity implements AnimeView{
                     anime_presenter.updateWatchStatus(getAuthToken(), position);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }

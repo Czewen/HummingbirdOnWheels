@@ -54,7 +54,7 @@ public class NavDrawerSetup {
                 if (position == selected_item_index)
                 {
                     //TODO: set the proper selection color here:
-                    renderer.setBackgroundResource(android.R.color.holo_orange_light);
+                    renderer.setBackgroundColor(Color.parseColor("#009688"));
                 }
                 return renderer;
             }

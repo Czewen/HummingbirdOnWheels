@@ -36,15 +36,6 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     }
 
 
-    public void sendMessage(View view){
-        //Intent intent = new Intent(this, DisplayMessageActivity.class);
-        Intent intent = new Intent(this, TestFragment.class);
-        EditText textbox = (EditText) findViewById(R.id.edit_message);
-        String message =  textbox.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
-
     public void login(View view){
         EditText username_input = (EditText) findViewById(R.id.login_username_textbox);
         username = username_input.getText().toString();
@@ -96,10 +87,6 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         login_presenter.onPause();
     }
 
-    public void editTest(String test){
-        EditText edit_test = (EditText) findViewById(R.id.edit_message);
-        edit_test.setText(test);
-    }
 
     public void onResume(){
         super.onResume();

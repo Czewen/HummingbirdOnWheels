@@ -71,7 +71,6 @@ public class LoginService extends Service {
                 EventBus.getDefault().post(new LoginFailedEvent(error));
             }
         }
-        login_view.editTest("Service received login event");
         new authenticateTask().execute(new TaskParams(event.getLoginName(), event.getPassword()));
     }
 
