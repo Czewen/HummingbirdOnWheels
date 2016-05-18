@@ -30,14 +30,16 @@
             <EditText
                 android:layout_width="250dp"
                 android:layout_height="50dp"
-                android:id="@+id/editText"
+                android:id="@+id/searchbox"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="0.40"
                 android:textColor="#fff"
                 android:hint="Search by title"
                 android:layout_marginLeft="10dp"
-                android:scaleType="fitXY"/>
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                />
 
             <ImageButton
                 android:layout_width="20dp"
@@ -46,7 +48,8 @@
                 android:src="@drawable/ic_action_cancel"
                 android:background="@android:color/transparent"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="15dp"
+                android:scaleType="fitXY"/>
 
         </LinearLayout>
 

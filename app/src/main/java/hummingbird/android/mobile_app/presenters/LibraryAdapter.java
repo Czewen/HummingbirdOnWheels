@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -67,7 +66,6 @@ public class LibraryAdapter extends ArrayAdapter<LibraryEntry> implements Filter
                 .centerCrop()
                 .into(view_holder.getLibraryEntryImage());
         view_holder.getTitle().setText(entry.anime.title);
-        ArrayList<Genre> genre_array = entry.anime.genres;
         addLibraryEntryGenreValues(entry.anime.genres, view_holder.getLibraryEntryGenreContainer());
         return row;
     }
