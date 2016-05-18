@@ -63,6 +63,7 @@
         <item>Neutral</item>
         <item>Negative</item>
     </string-array>
+    <string name="title_activity_search">Search</string>
 
 
     </resources>

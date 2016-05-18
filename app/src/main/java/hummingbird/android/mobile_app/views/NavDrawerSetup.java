@@ -18,6 +18,7 @@ import java.util.Arrays;
 import hummingbird.android.mobile_app.R;
 import hummingbird.android.mobile_app.views.activities.LibraryActivity;
 import hummingbird.android.mobile_app.views.activities.ProfileActivity;
+import hummingbird.android.mobile_app.views.activities.SearchActivity;
 
 /**
  * Created by CzeWen on 2016-05-17.
@@ -77,7 +78,7 @@ public class NavDrawerSetup {
                 intent = new Intent(current_activity, LibraryActivity.class);
                 break;
             case "Search":
-                intent = new Intent(current_activity, LibraryActivity.class);
+                intent = new Intent(current_activity, SearchActivity.class);
                 break;
             default:
                 return;
