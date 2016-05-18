@@ -57,11 +57,14 @@ public class AnimePresenter extends Presenter {
         anime = event.getAnimeObject();
         view.setCoverPhoto(anime.cover_image);
         view.setTitle(anime.title);
-        view.setEpisodeCount(anime.episode_count);
         if(is_library_entry) {
             view.setEpisodesWatched(library_entry.episodes_watched);
             view.setWatchStatus(watch_status_index_mapping.indexOf(library_entry.status));
         }
+        view.setShowType(anime.show_type);
+        view.setShowStatus(anime.status);
+        view.setEpisodeCount(anime.episode_count);
+
     }
 
     public void onEvent(UpdateLibrarySuccessEvent event){

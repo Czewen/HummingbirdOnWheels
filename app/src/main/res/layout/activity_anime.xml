@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <EditText
         android:layout_width="match_parent"
@@ -10,11 +11,15 @@
         android:text="Medium Text"
         android:editable="false"
         android:id="@+id/anime_title"
-        android:layout_marginLeft="2dp" />
+        android:layout_marginLeft="2dp"
+        android:textColor="#5f5f5f" />
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="219dp">
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08">
 
         <ImageView
             android:layout_width="160dp"
@@ -47,7 +52,8 @@
             android:layout_toRightOf="@+id/anime_cover_photo"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:textColor="#009688" />
 
         <TextView
             android:layout_width="30dp"
@@ -60,7 +66,8 @@
             android:gravity="center_vertical|center_horizontal"
             android:layout_alignTop="@+id/textView"
             android:layout_toRightOf="@+id/textView"
-            android:layout_toEndOf="@+id/textView" />
+            android:layout_toEndOf="@+id/textView"
+            android:textColor="#009688" />
 
         <TextView
             android:layout_width="30dp"
@@ -71,7 +78,8 @@
             android:layout_toRightOf="@+id/episodes_watched"
             android:layout_toEndOf="@+id/episodes_watched"
             android:text="/38"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:textColor="#009688" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -88,6 +96,117 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp" />
 
+        <hummingbird.android.mobile_app.CustomLayouts.RowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view"
+            android:layout_below="@+id/anime_cover_photo"
+            android:layout_alignRight="@+id/increase_watched_episodes"
+            android:layout_alignEnd="@+id/increase_watched_episodes"
+            android:layout_alignBottom="@+id/anime_cover_photo" />
+
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/border"
+        android:layout_margin="1dp"
+        android:background="#009688"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/anime_cover_photo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Type"
+                android:id="@+id/anime_show_type_header"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="TV"
+                android:id="@+id/anime_show_type"
+                android:layout_alignParentTop="true"
+                android:gravity="center|right"
+                android:layout_toRightOf="@+id/anime_show_type_header"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Episodes"
+                android:id="@+id/anime_episode_count_header"
+                android:gravity="left|center_vertical"
+                android:layout_below="@+id/anime_show_type_header"
+                android:layout_alignLeft="@+id/anime_show_type_header"
+                android:layout_alignStart="@+id/anime_show_type_header"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="295dp"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="0"
+                android:id="@+id/anime_episode_count_description"
+                android:gravity="center|right"
+                android:paddingRight="10dp"
+                android:layout_gravity="right"
+                android:layout_alignTop="@+id/anime_episode_count_header"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Status"
+                android:id="@+id/anime_status_header"
+                android:gravity="left|center_vertical"
+                android:layout_below="@+id/anime_episode_count_header"
+                android:layout_alignLeft="@+id/anime_show_type_header"
+                android:layout_alignStart="@+id/anime_show_type_header"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="0"
+                android:id="@+id/anime_show_status"
+                android:gravity="center|right"
+                android:paddingRight="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignTop="@+id/anime_status_header"
+                android:layout_alignRight="@+id/anime_status_header"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/anime_status_header"
+                android:layout_toEndOf="@+id/anime_status_header" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

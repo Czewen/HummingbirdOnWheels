@@ -37,7 +37,10 @@ public class AnimeActivity extends Activity implements AnimeView{
     TextView title_view;
     TextView episodes_watched;
     TextView no_episodes;
+    TextView episode_count_in_description;
     Spinner watch_status_spinner;
+    TextView show_type;
+    TextView show_status;
 
     private boolean userIsInteracting = false;
 
@@ -105,7 +108,10 @@ public class AnimeActivity extends Activity implements AnimeView{
             no_episodes = (TextView) findViewById(R.id.no_episodes);
         }
         no_episodes.setText("/" + episode_count);
-        //String number_of_episodes = "/"+episode_count;
+        if(episode_count_in_description == null)
+            episode_count_in_description = (TextView) findViewById(R.id.anime_episode_count_description);
+        episode_count_in_description.setText(Integer.toString(episode_count));
+
     }
 
     public void increaseWatchedEpisodes(View view){
@@ -121,6 +127,18 @@ public class AnimeActivity extends Activity implements AnimeView{
     public void setWatchStatus(int watch_status_index){
         userIsInteracting = false;
         watch_status_spinner.setSelection(watch_status_index);
+    }
+
+    public void setShowType(String type){
+        if(show_type == null)
+            show_type = (TextView) findViewById(R.id.anime_show_type);
+        show_type.setText(type);
+    }
+
+    public void setShowStatus(String status){
+        if(show_status == null)
+            show_status = (TextView) findViewById(R.id.anime_show_status);
+        show_status.setText(status);
     }
 
     @Override

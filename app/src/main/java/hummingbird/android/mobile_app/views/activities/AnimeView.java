@@ -14,4 +14,8 @@ public interface AnimeView {
     public void setEpisodesWatched(int episodes_watched_value);
 
     public void setWatchStatus(int watch_status_index);
+
+    public void setShowType(String type);
+
+    public void setShowStatus(String status);
 }
