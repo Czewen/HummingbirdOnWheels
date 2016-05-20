@@ -60,15 +60,15 @@ public class LoginPresenter {
         String oauth_token = login_success.getOauth_token();
         String username = login_success.getUsername();
         DBStore db = DBStore.getInstance((Activity) login_page);
-//        try {
+        try {
             if (!db.userExistsInDB(username)) {
                 db.insertUser(username);
                 LibraryService.initializeDBWithLibraryEntries(db, username);
             }
-//        }
-//        catch(Exception e){
-//            //STUB will handle later
-//        }
+        }
+        catch(Exception e){
+            //STUB will handle later
+        }
         login_page.loginSuccess(username, oauth_token);
     }
 

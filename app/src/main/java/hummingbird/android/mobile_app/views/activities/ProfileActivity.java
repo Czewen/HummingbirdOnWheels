@@ -72,20 +72,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         if(!profile_presenter.isListening())
             profile_presenter.onResume();
         Bundle extras = getIntent().getExtras();
-        if(extras!=null){
-            username = extras.getString("username");
-        }
+        username = extras.getString("username");
         setContentView(R.layout.activity_profile);
         setupTabs();
         SharedPreferences prefs = getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         auth_token = prefs.getString("auth_token", "token_missing");
-        if(!auth_token.contentEquals("token_missing") && username.contentEquals("me")) {
-            profile_presenter.getOwnInfo(auth_token);
+        profile_presenter.getProfileInfo(username);
             //profile_presenter.getOwnLibrary(auth_token);
-        }
-        else{
-            setName(auth_token);
-        }
+
 
         //get references to widgets
         menuDrawerList = (ListView) findViewById(R.id.left_drawer);
