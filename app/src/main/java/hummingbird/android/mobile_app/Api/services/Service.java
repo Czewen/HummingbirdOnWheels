@@ -9,8 +9,8 @@ import retrofit.Retrofit;
  */
 public class Service {
 
-    public String v1_end_point = "https://hummingbird.me/api/v1/";
-    public String v3_end_point = "https://hummingbird.me/api/v3/";
+    public static String v1_end_point = "https://hummingbird.me/api/v1/";
+    public static String v3_end_point = "https://hummingbird.me/api/v3/";
 
     public void stopListening(){
         EventBus.getDefault().unregister(this);
@@ -25,7 +25,7 @@ public class Service {
         return EventBus.getDefault().isRegistered(this);
     }
 
-    public Retrofit getHummingbirdV1RetrofitInstance(){
+    public static Retrofit getHummingbirdV1RetrofitInstance(){
         Retrofit api_v1 = new Retrofit.Builder()
                 .baseUrl(v1_end_point)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -33,7 +33,7 @@ public class Service {
         return api_v1;
     }
 
-    public Retrofit getHummingbirdV1RetrofitInstance(GsonConverterFactory converter){
+    public static Retrofit getHummingbirdV1RetrofitInstance(GsonConverterFactory converter){
         Retrofit api_v1 = new Retrofit.Builder()
                 .baseUrl(v1_end_point)
                 .addConverterFactory(converter)

@@ -3,11 +3,14 @@ package hummingbird.android.mobile_app.presenters;
 /**
  * Created by CzeWen on 2015-11-29.
  */
+import android.app.Activity;
 import android.util.Log;
 
 import de.greenrobot.event.EventBus;
+import hummingbird.android.mobile_app.Api.services.LibraryService;
 import hummingbird.android.mobile_app.Api.services.LoginService;
 import hummingbird.android.mobile_app.Exceptions.InvalidLoginCredentialException;
+import hummingbird.android.mobile_app.database.DBStore;
 import hummingbird.android.mobile_app.events.LoginEvent;
 import hummingbird.android.mobile_app.events.LoginFailedEvent;
 import hummingbird.android.mobile_app.events.LoginSuccessEvent;
@@ -56,6 +59,16 @@ public class LoginPresenter {
     public void onEvent(LoginSuccessEvent login_success){
         String oauth_token = login_success.getOauth_token();
         String username = login_success.getUsername();
+        DBStore db = DBStore.getInstance((Activity) login_page);
+//        try {
+            if (!db.userExistsInDB(username)) {
+                db.insertUser(username);
+                LibraryService.initializeDBWithLibraryEntries(db, username);
+            }
+//        }
+//        catch(Exception e){
+//            //STUB will handle later
+//        }
         login_page.loginSuccess(username, oauth_token);
     }
 

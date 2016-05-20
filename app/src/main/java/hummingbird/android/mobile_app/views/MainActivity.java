@@ -9,7 +9,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.*;
+import android.widget.Button;
 import android.widget.EditText;
+
+import hummingbird.android.mobile_app.AndroidDatabaseManager;
+import hummingbird.android.mobile_app.database.DBStore;
 import hummingbird.android.mobile_app.events.LoginEvent;
 import hummingbird.android.mobile_app.events.LoginSuccessEvent;
 import hummingbird.android.mobile_app.presenters.LoginPresenter;
@@ -32,6 +36,16 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
         login_presenter = new LoginPresenter(this);
+
+        Button checkDB = (Button)findViewById(R.id.checkDB);
+        final MainActivity a = this;
+        checkDB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent dbmanager = new Intent(a, AndroidDatabaseManager.class);
+                startActivity(dbmanager);
+            }
+        });
         //EventBus.getDefault().register(this);
     }
 
@@ -68,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("Hummingbird_on_wheels", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("auth_token", auth_token);
+        DBStore db = DBStore.getInstance(this);
         editor.commit();
         startActivity(intent);
     }

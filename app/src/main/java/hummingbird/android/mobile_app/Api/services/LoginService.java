@@ -45,9 +45,16 @@ public class LoginService extends Service {
             }
         }
         class authenticateTask extends AsyncTask<TaskParams, Void, Response<String>> {
+            private String username;
             protected Response<String> doInBackground(TaskParams... params){
                 try{
                     Response<String> result;
+                    if(params[0].api_params.get("username")==null){
+                        username = params[0].api_params.get("email");
+                    }
+                    else{
+                        username = params[0].api_params.get("username");
+                    }
                     result = api_v1_service.authenticate(params[0].api_params).execute();
                     return result;
                 }
@@ -61,7 +68,7 @@ public class LoginService extends Service {
                 if(result!=null){
                     if(result.code() == 201){
                         //login_view.loginSuccess(result.body());
-                        EventBus.getDefault().post(new LoginSuccessEvent("me", result.body()));
+                        EventBus.getDefault().post(new LoginSuccessEvent(username, result.body()));
                         return;
                     }
                     else if(result.code() == 401){

@@ -1,5 +1,6 @@
 package hummingbird.android.mobile_app.Api.services;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import hummingbird.android.mobile_app.Api.HummingbirdApiService;
+import hummingbird.android.mobile_app.database.DBStore;
 import hummingbird.android.mobile_app.events.GetLibraryEvent;
 import hummingbird.android.mobile_app.events.GetLibrarySuccessEvent;
 import hummingbird.android.mobile_app.events.NetworkFailureEvent;
@@ -58,6 +60,7 @@ public class LibraryService extends Service{
                     EventBus.getDefault().post(new ResponseFailureEvent(http_error_code, failure_reason));
                 }
             }
+
             @Override
             public void onFailure(Throwable t) {
                 if (t instanceof IOException) {
@@ -78,7 +81,7 @@ public class LibraryService extends Service{
         api_v1_service.updateLibraryEntry(event.getAnime_id(), params).enqueue(new Callback<LibraryEntry>() {
             @Override
             public void onResponse(Response<LibraryEntry> response, Retrofit retrofit) {
-                if(response.code()==201 || response.code() == 200)
+                if (response.code() == 201 || response.code() == 200)
                     EventBus.getDefault().post(new UpdateLibrarySuccessEvent(update_type, response.body()));
                 else {
                     int http_error_code = response.code();
@@ -90,6 +93,25 @@ public class LibraryService extends Service{
             @Override
             public void onFailure(Throwable t) {
                 EventBus.getDefault().post(new NetworkFailureEvent(t.getMessage()));
+            }
+        });
+    }
+
+    public static void initializeDBWithLibraryEntries(final DBStore db, final String username){
+        Retrofit retrofit_instance = getHummingbirdV1RetrofitInstance();
+        HummingbirdApiService hummingbird_api = retrofit_instance.create(HummingbirdApiService.class);;
+        hummingbird_api.getUserLibrary(username).enqueue(new Callback<ArrayList<LibraryEntry>>() {
+            @Override
+            public void onResponse(Response<ArrayList<LibraryEntry>> response, Retrofit retrofit) {
+                if(response.code() == 200){
+                    ArrayList<LibraryEntry> entries_to_insert = response.body();
+                    for(LibraryEntry entry : entries_to_insert)
+                        db.insertLibraryEntry(entry.id, entry.anime.id, username.toLowerCase());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
             }
         });
     }

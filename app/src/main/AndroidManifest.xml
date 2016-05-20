@@ -38,6 +38,8 @@
             android:name=".views.activities.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
+        <activity android:name=".AndroidDatabaseManager"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".views.activities.AnimeActivity"
             android:label="@string/title_activity_anime" >
